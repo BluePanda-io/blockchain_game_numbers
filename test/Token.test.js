@@ -6,7 +6,7 @@ require('chai')
     .use(require('chai-as-promised'))
     .should()
    
-contract('Token',([deployer,receiver,exchange])=>{
+contract('Token',([deployer,receiver,exchange,user1,user2])=>{
 
     const name = "My Name";
     const symbol = "TR";
@@ -146,5 +146,83 @@ contract('Token',([deployer,receiver,exchange])=>{
               })
       
           })
+    })
+
+
+    describe('Sent Tokens from aproved user',() =>{
+
+        let amount
+        let result
+
+        beforeEach(async () => {
+            amount = tokens(10)
+
+            result = await token.approve(exchange,amount,{from: deployer}) // The echange can spent money for behalf of teh deployer
+
+        })
+
+        describe('Success',() =>{
+
+            
+
+            beforeEach(async () => {
+                result =  await token.transferFrom(deployer,receiver,amount,{from: exchange}) // The exchange is spending money from the deployer to the receiver
+
+            })
+
+            it('transferFrom function works ', async ()=>{
+
+                let balanceOf = await token.balanceOf(receiver,{from: deployer})
+                balanceOf.toString().should.equal(amount.toString())
+
+                balanceOf = await token.balanceOf(deployer)
+                balanceOf.toString().should.equal(tokens(999990).toString())
+            })
+
+            it('emit a transfer event ', async ()=>{
+
+                const log = result.logs[0]
+                log.event.should.eq('Transfer')
+
+                const event = log.args
+                event.from.toString().should.equal(deployer,'from is correct')
+                event.to.toString().should.equal(receiver,'to is correct')
+                event.value.toString().should.equal(amount.toString(),'value is correct')
+            })
+        })
+
+        describe('failure', async () => {
+
+            it('rejects insufficient balances', async () => {
+              let invalidAmount
+              invalidAmount = tokens(100000000) // 100 million - greater than total supply
+              await token.transferFrom(deployer,receiver, invalidAmount, { from: exchange }).should.be.rejectedWith(EVM_REVERT)
+
+
+
+              await token.approve(exchange,amount,{from: deployer}) // The echange can spent money for behalf of teh deployer
+              await token.transferFrom(deployer,receiver,tokens(10),{from: exchange})
+              invalidAmount = tokens(12) // 100 million - greater than total supply
+              await token.transferFrom(deployer,receiver, invalidAmount, { from: exchange }).should.be.rejectedWith(EVM_REVERT)
+      
+            })
+
+            it('have aproved balance but not enought cash in the acount to sent it  ', async () => {
+  
+                await token.transfer(user1,tokens(50),{from: deployer})
+  
+                await token.approve(user2,tokens(200),{from: user1}) // The user2 can spent money for behalf of the user1
+                await token.transferFrom(user1,receiver,tokens(70),{from: user2}).should.be.rejectedWith(EVM_REVERT)
+                // invalidAmount = tokens(12) // 100 million - greater than total supply
+                // await token.transferFrom(deployer,receiver, invalidAmount, { from: exchange }).should.be.rejectedWith(EVM_REVERT)
+        
+              })
+      
+            it('rejects invalid recipients', async () => {
+                await token.transferFrom(0x0, tokens(10), { from: deployer }).should.be.rejected
+              })
+      
+        //   })
+        })
     })
 })
