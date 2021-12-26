@@ -59,7 +59,7 @@ function App() {
 
   const makeTransaction = () =>{
     console.log("transaction ")
-    token.methods.transfer("0xadF98a8b0908C15867a438989CeE6583Ab6fdd18",100).send({from:web3_accounts[0]}).then((res)=>{
+    token.methods.transfer(accountSelect,inputNumberTokens).send({from:web3_accounts[0]}).then((res)=>{
       console.log("I sent the cash go and check ",res)
 
       dispatch(checkBalance(token,web3_accounts[0]))
@@ -75,6 +75,27 @@ function App() {
     dispatch(checkBalance(token,web3_accounts[0]))
 
   }
+
+
+  const [inputNumberTokens, setInputNumberTokens] = useState(0);
+
+  const options = [
+    {
+      label: "Account 2",
+      value: "0xadF98a8b0908C15867a438989CeE6583Ab6fdd18",
+    },
+    {
+      label: "Account 3",
+      value: "0x5A235E3d3bAc7b361C92922960F2AEf7FA093F87",
+    },
+    {
+      label: "Account 4",
+      value: "0x53c92252AA0da19185A69fE01651C633520fC407",
+    },
+  ];
+
+  const [accountSelect, setAccountSelect] = useState("0x5A235E3d3bAc7b361C92922960F2AEf7FA093F87");
+
 
 
   return (
@@ -93,9 +114,20 @@ function App() {
 
 
             <input 
-              // value={this.state.inputValue} 
-              // onChange={this.updateInputValue}
+              value={inputNumberTokens} 
+              onChange={(e)=>{setInputNumberTokens(e.target.value)}}
             />
+
+            <select
+              value={accountSelect}
+              onChange={(e) => {
+                setAccountSelect(e.target.value)
+              }}
+            >
+              {options.map((option) => (
+                <option value={option.value}>{option.label}</option>
+              ))}
+            </select>
 
             <button onClick={() => 
               makeTransaction()
@@ -120,6 +152,7 @@ function App() {
           </header>
         </div>
     </>
+
   );
 }
 
