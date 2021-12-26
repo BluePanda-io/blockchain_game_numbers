@@ -1,29 +1,27 @@
-// import * as loginActionTags from "../actions/loginActions";
+import * as web3ActionTags from "../actions/web3Actions";
 
 const stateUserInitial = {
-  isLogin: false,
-  token: "",
-  userJSON: {},
-  userAccess: "",
+  isAvailable: false,
+  token: {},
+  accounts: [],
+  web3: {},
 };
 
 const web3Reducer = (stateUser = stateUserInitial, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    // case loginActionTags.LOGIN_USER_EMAIL:
-    //   return {
-    //     ...stateUser,
-    //     token: payload.token,
-    //     userJSON: payload.userJSON,
-    //     isLogin: true,
-    //     userAccess: payload.userJSON.userAccess,
-    //   };
-    // case loginActionTags.LOGOUT_USER_USER:
-    //   return { ...stateUserInitial };
+    case web3ActionTags.WEB3INIT:
+      return {
+        ...stateUser,
+        web3: payload.web3Info.window_web3,
+        token: payload.web3Info.token,
+        accounts: payload.web3Info.accounts,
+        isAvailable: true,
+      };
 
     default:
-      return stateUser;
+      return {...stateUser};
   }
 };
 
