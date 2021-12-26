@@ -6,6 +6,9 @@ import Token from '../../abis/Token.json'
 
 
 export const WEB3INIT = "WEB3INIT";
+export const FF = "FF";
+export const CHECK_BALANCE = "CHECK_BALANCE";
+
 
 const _web3Initialize = (web3Info) => {
 
@@ -17,6 +20,67 @@ const _web3Initialize = (web3Info) => {
     };
   };
 
+  const _checkBalance = (userData) => {
+
+    return {
+      type: CHECK_BALANCE,
+      payload: {
+          userData
+      },
+    };
+  };
+
+  const _tst = (web3Info) => {
+
+    return {
+      type: CHECK_BALANCE,
+      payload: {
+          web3Info
+      },
+    };
+  };
+
+
+export const checkBalance = (token,account) => {
+    return async (dispatch) => {
+        let web3Info = {}
+
+        // dispatch(_tst(web3Info));
+        const userBalance = token.methods.balanceOf(account).call().then(res=>{
+
+            web3Info["userBalance"] = res
+
+
+            dispatch(_tst(web3Info));
+        })
+
+    }
+
+}
+
+// export const checkBalance = (token,account) => {
+//     return (dispatch) => {
+
+//         let userData = {}
+
+//         try {
+           
+//             const userBalance = token.methods.balanceOf(account).call().then(res=>{
+
+//                 userData["userBalance"] = res
+
+
+//                 dispatch(_checkBalance(userData));
+//             })
+
+            
+
+//         } catch(err) {
+//            console.log("No Etherium Wallet")
+//         }
+        
+//     }
+// }
 
 export const web3Initialize = () => {
     return async (dispatch) => {

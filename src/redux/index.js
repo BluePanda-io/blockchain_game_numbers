@@ -10,7 +10,7 @@ import thunk from 'redux-thunk';
 
 const ourDepartments = combineReducers({
    web3Data: web3Reducer,
-   user: userReducer,
+   userData: userReducer,
 });
 
 const store = createStore(

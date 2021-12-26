@@ -11,8 +11,8 @@ import Token from './abis/Token.json'
 
 import { useDispatch, useSelector } from "react-redux";
 
-import {web3Initialize} from "./redux/actions/web3Actions"
-import {checkBalance} from "./redux/actions/userActions"
+import {web3Initialize,checkBalance} from "./redux/actions/web3Actions"
+// import {checkBalance} from "./redux/actions/userActions"
 
 
 
@@ -33,7 +33,7 @@ function App() {
   });
 
   const web3_accounts = useSelector((state) => {
-    return state.web3Data ? state.web3Data.accounts : {};
+    return state.userData ? state.userData.accounts : {};
   });
 
   const token = useSelector((state) => {
@@ -53,37 +53,26 @@ function App() {
   }, [token]);
 
   const user1_tokens = useSelector((state) => {
-    return state.user ? state.user.balance : null;
+    return state.userData ? state.userData.balance : null;
   });
 
-
-  // const [user1_tokens, setUser1_tokens] = useState("");
-  // useEffect( () => {
-  //   if (token.methods){
-  //     token.methods.balanceOf(web3_accounts[0]).call().then((res)=>{
-  //       console.log("res = ",res)
-  //       setUser1_tokens(res)
-  //     })
-  //   }
-
-  // }, [token]);
-  
 
   const makeTransaction = () =>{
     console.log("transaction ")
     token.methods.transfer("0xadF98a8b0908C15867a438989CeE6583Ab6fdd18",100).send({from:web3_accounts[0]}).then((res)=>{
       console.log("I sent the cash go and check ",res)
 
+      dispatch(checkBalance(token,web3_accounts[0]))
+
+
     })
 
   }
 
-  const checkBalance = () =>{
+  const checkBalance_button = () =>{
     console.log("transaction ")
-
-    dispatch(checkBalance())
-
     
+    dispatch(checkBalance(token,web3_accounts[0]))
 
   }
 
@@ -103,6 +92,11 @@ function App() {
             </p>:true}
 
 
+            <input 
+              // value={this.state.inputValue} 
+              // onChange={this.updateInputValue}
+            />
+
             <button onClick={() => 
               makeTransaction()
             }>
@@ -111,7 +105,7 @@ function App() {
 
 
             <button onClick={() => 
-              checkBalance()
+              checkBalance_button()
             }>
               check Balance
             </button>

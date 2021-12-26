@@ -21,11 +21,8 @@ const userReducer = (stateUser = stateUserInitial, action) => {
     case userActionTags.CHECK_BALANCE:
       return {
         ...stateUser,
-        balance: payload.userData.userBalance,
-        // balance: payload.web3Info.userBalance,
+        balance: payload.web3Info.userBalance,
       };
-    // case web3ActionTags.WEB3INIT:
-    //   return { ...stateUserInitial };
 
     default:
       return {...stateUser};
