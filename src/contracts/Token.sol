@@ -11,10 +11,17 @@ contract Token {
 
     string public symbol = "TR";
 
+    uint256 public maxAllowanceCoin = 20;
+
     uint256 public decimals = 18;
     uint256 public totalSupply;
 
+    address public gameAddress;
+    uint256 public speedTokenGeneration = 600;
+
+
     mapping(address => uint256) public balanceOf;
+    mapping(address => uint) public timeStampLastPlay;
     mapping(address => mapping(address => uint256)) public allowance;
 
     event Transfer(address indexed from, address indexed to,uint256 value);
@@ -24,6 +31,8 @@ contract Token {
     constructor() public {
         totalSupply = 1000000 * (10 ** decimals);
         balanceOf[msg.sender] = totalSupply;
+
+        gameAddress = msg.sender;
     }
 
     function transfer(address _to, uint256 _value) public returns (bool success) {
@@ -65,6 +74,36 @@ contract Token {
 
         allowance[_from][msg.sender] = allowance[_from][msg.sender].sub(_value);
         _transfer(_from,_to,_value);
+
+        return (true);
+    }
+
+    function allowedTokensToPlay() public returns (bool success){
+        // require(balanceOf[_from]>=_value);
+        // require(allowance[_from][msg.sender]>=_value);
+
+        if (timeStampLastPlay[msg.sender]==0){
+            allowance[gameAddress][msg.sender] = 15;
+            // allowance[gameAddress][msg.sender] = maxAllowanceCoin;
+
+            timeStampLastPlay[msg.sender] = block.timestamp;
+        } else {
+
+            uint256 differenceTime;
+            
+            differenceTime = block.timestamp.sub(timeStampLastPlay[msg.sender]);
+
+
+            allowance[gameAddress][msg.sender] = allowance[gameAddress][msg.sender].add((maxAllowanceCoin*differenceTime)/speedTokenGeneration);
+
+            if (allowance[gameAddress][msg.sender]>maxAllowanceCoin){
+                allowance[gameAddress][msg.sender] = maxAllowanceCoin;
+            }
+
+            timeStampLastPlay[msg.sender] = block.timestamp;
+        }
+        // allowance[_from][msg.sender] = allowance[_from][msg.sender].sub(_value);
+        // _transfer(_from,_to,_value);
 
         return (true);
     }

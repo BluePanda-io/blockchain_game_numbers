@@ -5,6 +5,9 @@ import {tokens,EVM_REVERT} from './helpers'
 require('chai')
     .use(require('chai-as-promised'))
     .should()
+
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
    
 contract('Token',([deployer,receiver,exchange,user1,user2])=>{
 
@@ -50,6 +53,12 @@ contract('Token',([deployer,receiver,exchange,user1,user2])=>{
         it('assigns the total supply to the deployer', async ()=>{
             const result = await token.balanceOf(deployer)
             result.toString().should.equal(totalSupply)
+        })
+
+        it('check game address', async ()=>{
+            const result = await token.gameAddress()
+            // console.log("result = ",result.toString())
+            result.toString().should.equal(deployer.toString())
         })
 
 
@@ -223,6 +232,116 @@ contract('Token',([deployer,receiver,exchange,user1,user2])=>{
               })
       
         //   })
+        })
+    })
+
+
+    describe('Game Tokens Contracts',() =>{
+
+        describe('Allow Tokens to Play',() =>{
+
+            let amount
+            let result
+
+            // it('check timeStampLastPlay', async ()=>{
+            //     // const result = await token.balanceOf(deployer)
+            //     // result.toString().should.equal(totalSupply)
+            //     let result = await token.timeStampLastPlay(user1)
+            //     console.log("timeStampLastPlay = ",result.toString())
+
+            //     result = await token.allowance(deployer,user1) // were you spent who spent it 
+            //     console.log("allowance = ",result.toString())
+
+
+            //     await token.allowedTokensToPlay({from: user1})
+
+
+            //     result = await token.timeStampLastPlay(user1)
+            //     console.log("timeStampLastPlay = ",result.toString())
+
+
+            //     result = await token.allowance(deployer,user1) // were you spent who spent it 
+            //     console.log("allowance = ",result.toString())
+
+
+            //     await delay(32000)
+
+            //     console.log("Deplay for X seconcds = ")
+                
+
+
+            //     await token.allowedTokensToPlay({from: user1})
+
+
+            //     result = await token.timeStampLastPlay(user1)
+            //     console.log("timeStampLastPlay = ",result.toString())
+
+
+            //     result = await token.allowance(deployer,user1) // were you spent who spent it 
+            //     console.log("allowance = ",result.toString())
+
+            // })
+
+            it('Get Coins from your available ones ', async ()=>{
+                // const result = await token.balanceOf(deployer)
+                // result.toString().should.equal(totalSupply)
+                let result = await token.timeStampLastPlay(user1)
+                console.log("timeStampLastPlay = ",result.toString())
+
+                result = await token.allowance(deployer,user1) // were you spent who spent it 
+                console.log("allowance = ",result.toString())
+
+
+                await token.allowedTokensToPlay({from: user1})
+
+
+                result = await token.timeStampLastPlay(user1)
+                console.log("timeStampLastPlay = ",result.toString())
+
+
+                result = await token.allowance(deployer,user1) // were you spent who spent it 
+                console.log("allowance = ",result.toString())
+
+                result = await token.balanceOf(user1)
+                console.log("balanceOf = ",result.toString())
+
+
+
+                await token.transferFrom(deployer,user1,10,{from: user1}) // The exchange is spending money from the deployer to the receiver
+
+
+                result = await token.allowance(deployer,user1) // were you spent who spent it 
+                console.log("allowance After transferFrom= ",result.toString())
+
+                result = await token.balanceOf(user1)
+                console.log("balanceOf After transferFrom= ",result.toString())
+
+
+            })
+
+            // beforeEach(async () => {
+            //     amount = tokens(10)
+
+            //     result = await token.approve(exchange,amount,{from: deployer}) // The echange can spent money for behalf of teh deployer
+
+            // })
+
+            // describe('Success',() =>{
+
+                
+
+            //     beforeEach(async () => {
+            //         result =  await token.transferFrom(deployer,receiver,amount,{from: exchange}) // The exchange is spending money from the deployer to the receiver
+
+            //     })
+
+            
+            // })
+
+            // describe('failure', async () => {
+
+                
+            // })
         })
     })
 })
