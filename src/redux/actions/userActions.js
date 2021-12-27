@@ -1,18 +1,13 @@
-import Web3 from 'web3'
-import detectEthereumProvider from '@metamask/detect-provider'
-
-
-import Token from '../../abis/Token.json'
 
 
 export const CHECK_BALANCE = "CHECK_BALANCE";
 
-const _checkBalance = (userData) => {
+const _checkBalance = (web3Info) => {
 
     return {
       type: CHECK_BALANCE,
       payload: {
-          userData
+          web3Info
       },
     };
   };
@@ -21,22 +16,63 @@ const _checkBalance = (userData) => {
 export const checkBalance = (token,account) => {
     return (dispatch) => {
 
-        let userData = {}
+        let web3Info = {}
+
+        console.log("this is amazing")
 
         try {
            
-            const userBalance = token.methods.balanceOf(account).call().then(res=>{
+            token.methods.balanceOf(account).call().then(res=>{
 
-                userData["userBalance"] = res
+                web3Info["userBalance"] = res
 
 
-                dispatch(_checkBalance(userData));
+                dispatch(_checkBalance(web3Info));
             })
 
             
 
         } catch(err) {
            console.log("No Etherium Wallet")
+        }
+        
+    }
+}
+
+export const transferTokens = (token,accountSend,numberOfTokens,accountMe) => {
+    return (dispatch) => {
+
+        try {
+
+            token.methods.transfer(accountSend,numberOfTokens).send({from:accountMe}).then((res)=>{
+          
+                dispatch(checkBalance(token,accountMe))
+        
+            })
+
+        } catch(err) {
+           console.log("I cant sent cash ")
+        }
+        
+    }
+}
+
+
+export const gameTransferTokens = (token,accountSend,numberOfTokens,accountMe) => {
+    return (dispatch) => {
+
+        const gameAddress = "0xadF98a8b0908C15867a438989CeE6583Ab6fdd18"
+
+        try {
+
+            token.methods.transfer(accountSend,numberOfTokens).send({from:gameAddress}).then((res)=>{
+          
+                dispatch(checkBalance(token,accountMe))
+        
+            })
+
+        } catch(err) {
+           console.log("I cant sent cash ")
         }
         
     }

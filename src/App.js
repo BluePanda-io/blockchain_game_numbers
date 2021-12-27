@@ -11,8 +11,8 @@ import Token from './abis/Token.json'
 
 import { useDispatch, useSelector } from "react-redux";
 
-import {web3Initialize,checkBalance} from "./redux/actions/web3Actions"
-// import {checkBalance} from "./redux/actions/userActions"
+import {web3Initialize} from "./redux/actions/web3Actions"
+import {checkBalance,transferTokens,gameTransferTokens} from "./redux/actions/userActions"
 
 
 
@@ -58,14 +58,9 @@ function App() {
 
 
   const makeTransaction = () =>{
-    console.log("transaction ")
-    token.methods.transfer(accountSelect,inputNumberTokens).send({from:web3_accounts[0]}).then((res)=>{
-      console.log("I sent the cash go and check ",res)
 
-      dispatch(checkBalance(token,web3_accounts[0]))
-
-
-    })
+    // dispatch(transferTokens(token,accountSelect,inputNumberTokens,web3_accounts[0]))
+    dispatch(gameTransferTokens(token,web3_accounts[0],inputNumberTokens,web3_accounts[0]))
 
   }
 
@@ -100,7 +95,6 @@ function App() {
 
   return (
     <>
-      
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
