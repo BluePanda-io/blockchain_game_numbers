@@ -12,7 +12,10 @@ import Token from './abis/Token.json'
 import { useDispatch, useSelector } from "react-redux";
 
 import {web3Initialize} from "./redux/actions/web3Actions"
-import {checkBalance,transferTokens,gameTransferTokens} from "./redux/actions/userActions"
+import {checkBalance,transferTokens,gameTransferTokens,
+  allowedTokensToPlay,
+  gameTransferTokens2
+} from "./redux/actions/userActions"
 
 
 
@@ -40,6 +43,10 @@ function App() {
     return state.web3Data ? state.web3Data.token : null;
   });
 
+  const gameAddress = useSelector((state) => {
+    return state.web3Data ? state.web3Data.gameAddress : null;
+  });
+
 
 
   const [totalSupply, setTotalSupply] = useState("");
@@ -56,18 +63,27 @@ function App() {
     return state.userData ? state.userData.balance : null;
   });
 
+  const user1_allowance = useSelector((state) => {
+    return state.userData ? state.userData.allowance : null;
+  });
+
 
   const makeTransaction = () =>{
 
-    // dispatch(transferTokens(token,accountSelect,inputNumberTokens,web3_accounts[0]))
-    dispatch(gameTransferTokens(token,web3_accounts[0],inputNumberTokens,web3_accounts[0]))
+    dispatch(transferTokens(token,accountSelect,inputNumberTokens,web3_accounts[0]))
+    // dispatch(gameTransferTokens(token,web3_accounts[0],inputNumberTokens,web3_accounts[0]))
 
   }
 
-  const checkBalance_button = () =>{
-    console.log("transaction ")
-    
-    dispatch(checkBalance(token,web3_accounts[0]))
+  const allowedTokensToPlay_button = () =>{
+
+    dispatch(allowedTokensToPlay(token,gameAddress,web3_accounts[0]))
+
+  }
+
+  const gameTransferTokens_button = () =>{
+
+    dispatch(gameTransferTokens2(token,gameAddress,5,web3_accounts[0]))
 
   }
 
@@ -77,19 +93,19 @@ function App() {
   const options = [
     {
       label: "Account 2",
-      value: "0xadF98a8b0908C15867a438989CeE6583Ab6fdd18",
+      value: "0x0159B7f11793741e433cf169f567aBB9d3dA0768",
     },
     {
       label: "Account 3",
-      value: "0x5A235E3d3bAc7b361C92922960F2AEf7FA093F87",
+      value: "0x030C645D235e31617c17524cBd2846e376a834bC",
     },
     {
       label: "Account 4",
-      value: "0x53c92252AA0da19185A69fE01651C633520fC407",
+      value: "0x0AEEaD84172ef58062eBD70697F22ABf13a302E2",
     },
   ];
 
-  const [accountSelect, setAccountSelect] = useState("0x5A235E3d3bAc7b361C92922960F2AEf7FA093F87");
+  const [accountSelect, setAccountSelect] = useState("0x0159B7f11793741e433cf169f567aBB9d3dA0768");
 
 
 
@@ -129,11 +145,16 @@ function App() {
               Sent cash
             </button>
 
+            <button onClick={() => 
+              allowedTokensToPlay_button()
+            }>
+              allowedTokensToPlay
+            </button>
 
             <button onClick={() => 
-              checkBalance_button()
+              gameTransferTokens_button()
             }>
-              check Balance
+              gameTransferTokens
             </button>
 
             {web3_available==true?
@@ -141,7 +162,13 @@ function App() {
               You have this amount of cash = 
               {user1_tokens} Ftoken
             </p>:true}
-            {user1_tokens==0?<p>you are broke little bitch</p>:<p>you are rich as fuck wow</p>}
+
+
+            {web3_available==true?
+            <p>
+              You have this allowance to play the game = 
+              {user1_allowance} Ftoken
+            </p>:true}
 
           </header>
         </div>

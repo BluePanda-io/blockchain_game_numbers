@@ -282,21 +282,68 @@ contract('Token',([deployer,receiver,exchange,user1,user2])=>{
 
             // })
 
-            it('Get Coins from your available ones ', async ()=>{
-                // const result = await token.balanceOf(deployer)
-                // result.toString().should.equal(totalSupply)
-                let result = await token.timeStampLastPlay(user1)
-                console.log("timeStampLastPlay = ",result.toString())
+            // it('Get Coins from your available ones ', async ()=>{
+                
+            //     let result = await token.timeStampLastPlay(user1)
+            //     console.log("timeStampLastPlay = ",result.toString())
 
-                result = await token.allowance(deployer,user1) // were you spent who spent it 
+            //     result = await token.allowance(deployer,user1) // were you spent who spent it 
+            //     console.log("allowance = ",result.toString())
+
+
+            //     await token.allowedTokensToPlay({from: user1})
+
+
+            //     result = await token.timeStampLastPlay(user1)
+            //     console.log("timeStampLastPlay = ",result.toString())
+
+
+            //     result = await token.allowance(deployer,user1) // were you spent who spent it 
+            //     console.log("allowance = ",result.toString())
+
+            //     result = await token.balanceOf(user1)
+            //     console.log("balanceOf = ",result.toString())
+
+
+
+            //     await token.transferFrom(deployer,user1,10,{from: user1}) // The exchange is spending money from the deployer to the receiver
+
+
+            //     result = await token.allowance(deployer,user1) // were you spent who spent it 
+            //     console.log("allowance After transferFrom= ",result.toString())
+
+            //     result = await token.balanceOf(user1)
+            //     console.log("balanceOf After transferFrom= ",result.toString())
+
+
+            // })
+
+            it('Start the Game Test ', async ()=>{
+
+
+                await token.transfer(user1, 30, { from: deployer })
+
+
+                let result = await token.allowance(deployer,user1) // were you spent who spent it 
                 console.log("allowance = ",result.toString())
+
+                result = await token.balanceOf(user1)
+                console.log("balanceOf = ",result.toString())
+
+                console.log("")
 
 
                 await token.allowedTokensToPlay({from: user1})
 
+                result = await token.allowance(deployer,user1) // were you spent who spent it 
+                console.log("allowance = ",result.toString())
 
-                result = await token.timeStampLastPlay(user1)
-                console.log("timeStampLastPlay = ",result.toString())
+                result = await token.balanceOf(user1)
+                console.log("balanceOf = ",result.toString())
+                console.log("")
+
+
+                await token.startGame({from: user1})
 
 
                 result = await token.allowance(deployer,user1) // were you spent who spent it 
@@ -304,18 +351,7 @@ contract('Token',([deployer,receiver,exchange,user1,user2])=>{
 
                 result = await token.balanceOf(user1)
                 console.log("balanceOf = ",result.toString())
-
-
-
-                await token.transferFrom(deployer,user1,10,{from: user1}) // The exchange is spending money from the deployer to the receiver
-
-
-                result = await token.allowance(deployer,user1) // were you spent who spent it 
-                console.log("allowance After transferFrom= ",result.toString())
-
-                result = await token.balanceOf(user1)
-                console.log("balanceOf After transferFrom= ",result.toString())
-
+                console.log("")
 
             })
 

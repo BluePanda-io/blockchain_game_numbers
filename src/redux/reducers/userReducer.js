@@ -5,6 +5,7 @@ const stateUserInitial = {
   isAvailable: false,
   accounts: [],
   balance: null,
+  allowance: null,
 };
 
 const userReducer = (stateUser = stateUserInitial, action) => {
@@ -16,12 +17,18 @@ const userReducer = (stateUser = stateUserInitial, action) => {
         ...stateUser,
         accounts: payload.web3Info.accounts,
         balance: payload.web3Info.userBalance,
+        allowance: payload.web3Info.userAllowance,
         isAvailable: true,
       };
     case userActionTags.CHECK_BALANCE:
       return {
         ...stateUser,
         balance: payload.web3Info.userBalance,
+      };
+    case userActionTags.CHECK_ALLOWANCE:
+      return {
+        ...stateUser,
+        allowance: payload.web3Info.userAllowance,
       };
 
     default:

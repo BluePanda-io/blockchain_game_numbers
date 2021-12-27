@@ -19,6 +19,10 @@ contract Token {
     address public gameAddress;
     uint256 public speedTokenGeneration = 600;
 
+    uint256 public betValueGame = 5;
+
+
+
 
     mapping(address => uint256) public balanceOf;
     mapping(address => uint) public timeStampLastPlay;
@@ -78,32 +82,66 @@ contract Token {
         return (true);
     }
 
-    function allowedTokensToPlay() public returns (bool success){
-        // require(balanceOf[_from]>=_value);
-        // require(allowance[_from][msg.sender]>=_value);
+    function transferFromGame(address _from, address _to, uint256 _value) public returns (bool success){
+        require(balanceOf[_from]>=_value);
+        require(allowance[_from][msg.sender]>=_value);
 
-        if (timeStampLastPlay[msg.sender]==0){
-            allowance[gameAddress][msg.sender] = 15;
-            // allowance[gameAddress][msg.sender] = maxAllowanceCoin;
+        allowance[_from][msg.sender] = allowance[_from][msg.sender].sub(_value);
+        _transfer(_from,_to,_value);
 
-            timeStampLastPlay[msg.sender] = block.timestamp;
+        return (true);
+    }
+
+    function _allowedTokensToPlay(address _from) internal {
+
+        if (timeStampLastPlay[_from]==0){
+            allowance[gameAddress][_from] = 15;
+            // allowance[gameAddress][_from] = maxAllowanceCoin;
+
+            timeStampLastPlay[_from] = block.timestamp;
         } else {
 
-            uint256 differenceTime;
-            
-            differenceTime = block.timestamp.sub(timeStampLastPlay[msg.sender]);
+            uint256 differenceTime = block.timestamp.sub(timeStampLastPlay[_from]);
+
+            uint256 extraAllowance = (maxAllowanceCoin*differenceTime)/speedTokenGeneration;
 
 
-            allowance[gameAddress][msg.sender] = allowance[gameAddress][msg.sender].add((maxAllowanceCoin*differenceTime)/speedTokenGeneration);
+            if (extraAllowance!=0){
 
-            if (allowance[gameAddress][msg.sender]>maxAllowanceCoin){
-                allowance[gameAddress][msg.sender] = maxAllowanceCoin;
+                allowance[gameAddress][_from] = allowance[gameAddress][_from].add(extraAllowance);
+
+                if (allowance[gameAddress][_from]>maxAllowanceCoin){
+                    allowance[gameAddress][_from] = maxAllowanceCoin;
+                }
+
+                timeStampLastPlay[_from] = block.timestamp;
+
             }
-
-            timeStampLastPlay[msg.sender] = block.timestamp;
+            
         }
-        // allowance[_from][msg.sender] = allowance[_from][msg.sender].sub(_value);
-        // _transfer(_from,_to,_value);
+        
+    }
+
+    function allowedTokensToPlay() public returns (bool success){
+
+       _allowedTokensToPlay(msg.sender);
+
+        return (true);
+    }
+
+    function startGame() public returns (bool success){ // Here we are starting the game and then in the front end we are deciding and sending the prices! (so here we are just getting cash fromt the user in order for him to have the ability to participate on the game)
+
+       _allowedTokensToPlay(msg.sender); // Check How much coins you allow to play before
+
+        require(allowance[gameAddress][msg.sender]>=betValueGame); // You need to have allowance of coins to play
+
+        if (balanceOf[msg.sender]>betValueGame){
+            balanceOf[msg.sender] = balanceOf[msg.sender].sub(betValueGame); // You bet this amount of your coin
+            
+            allowance[gameAddress][msg.sender] = allowance[gameAddress][msg.sender].sub(betValueGame); // And comes out of your allowance too
+
+        }
+
 
         return (true);
     }

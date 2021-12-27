@@ -5,9 +5,8 @@ import * as userActionTags from "../actions/userActions";
 const stateUserInitial = {
   isAvailable: false,
   token: {},
-//   accounts: [],
   web3: {},
-//   balance: null,
+  gameAddress: '',
 };
 
 const web3Reducer = (stateUser = stateUserInitial, action) => {
@@ -19,6 +18,7 @@ const web3Reducer = (stateUser = stateUserInitial, action) => {
         ...stateUser,
         web3: payload.web3Info.window_web3,
         token: payload.web3Info.token,
+        gameAddress: payload.web3Info.gameAddress,
         isAvailable: true,
       };
 
