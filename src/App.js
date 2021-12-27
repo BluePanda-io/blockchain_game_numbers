@@ -17,11 +17,17 @@ import {checkBalance,transferTokens,gameTransferTokens,
   gameTransferTokens2
 } from "./redux/actions/userActions"
 
+import {startGame,playAgain} from "./redux/actions/gameActions"
+
+
 
 
 function App() {
 
   const dispatch = useDispatch();
+
+  
+
 
 
   useEffect(() => {
@@ -87,6 +93,18 @@ function App() {
 
   }
 
+  const startGame_button = () =>{
+
+    dispatch(startGame(token,gameAddress,web3_accounts[0]))
+
+  }
+
+  const playAgain_button = () =>{
+
+    dispatch(playAgain())
+
+  }
+
 
   const [inputNumberTokens, setInputNumberTokens] = useState(0);
 
@@ -116,10 +134,10 @@ function App() {
             <img src={logo} className="App-logo" alt="logo" />
             {web3_available==true?
             <p>
-              Edit <code>src/App.js</code> and save to reload.
+              Your Address = 
               {web3_accounts}
 
-              This is the Token Total Supply:{totalSupply}
+              {/* This is the Token Total Supply:{totalSupply} */}
             </p>:true}
 
 
@@ -155,6 +173,19 @@ function App() {
               gameTransferTokens_button()
             }>
               gameTransferTokens
+            </button>
+
+
+            <button onClick={() => 
+              startGame_button()
+            }>
+              Game Start 
+            </button>
+
+            <button onClick={() => 
+              playAgain_button()
+            }>
+              Play Again 
             </button>
 
             {web3_available==true?

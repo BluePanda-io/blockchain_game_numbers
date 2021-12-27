@@ -138,7 +138,7 @@ contract Token {
         if (balanceOf[msg.sender]>betValueGame){
             balanceOf[msg.sender] = balanceOf[msg.sender].sub(betValueGame); // You bet this amount of your coin
             
-            allowance[gameAddress][msg.sender] = allowance[gameAddress][msg.sender].sub(betValueGame); // And comes out of your allowance too
+            // allowance[gameAddress][msg.sender] = allowance[gameAddress][msg.sender].sub(betValueGame); // And comes out of your allowance too
 
         }
 

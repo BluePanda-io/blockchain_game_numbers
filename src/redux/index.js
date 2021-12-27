@@ -1,5 +1,6 @@
 import web3Reducer from './reducers/web3Reducer';
 import userReducer from './reducers/userReducer';
+import gameReducer from './reducers/gameReducer';
 
 
 
@@ -11,6 +12,7 @@ import thunk from 'redux-thunk';
 const ourDepartments = combineReducers({
    web3Data: web3Reducer,
    userData: userReducer,
+   gameData: gameReducer,
 });
 
 const store = createStore(

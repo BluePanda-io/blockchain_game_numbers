@@ -154,3 +154,24 @@ export const allowedTokensToPlay = (token,gameAddress,accountMe) => {
     }
 }
 
+
+export const startGame = (token,gameAddress,accountMe) => {
+    return (dispatch) => {
+
+
+        try {
+
+            token.methods.startGame().send({from:accountMe}).then((res)=>{
+          
+                dispatch(checkBalance(token,accountMe))
+
+                dispatch(checkAllowance(token,gameAddress,accountMe))
+        
+            })
+
+        } catch(err) {
+           console.log("I cant sent cash ")
+        }
+        
+    }
+}
