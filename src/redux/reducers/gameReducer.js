@@ -25,6 +25,13 @@ const gameReducer = (stateUser = stateUserInitial, action) => {
         ...stateUser,
         timesPlayed: stateUser.timesPlayed + 1,
       };
+    case gameActionTags.FINISH_GAME:
+      console.log("sdfasdfasdfasdfa")
+      return {
+        ...stateUser,
+        playingNow: false,
+        timesPlayed: 0,
+      };
 
     default:
       return {...stateUser};

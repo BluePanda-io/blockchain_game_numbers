@@ -17,7 +17,7 @@ import {checkBalance,transferTokens,gameTransferTokens,
   gameTransferTokens2
 } from "./redux/actions/userActions"
 
-import {startGame,playAgain} from "./redux/actions/gameActions"
+import {startGame,playAgain,finishGame} from "./redux/actions/gameActions"
 
 
 
@@ -101,7 +101,24 @@ function App() {
 
   const playAgain_button = () =>{
 
-    dispatch(playAgain())
+    if (playingNow)
+      dispatch(playAgain())
+    else
+      alert("You need to first Start the Game")
+
+  }
+
+  const playingNow = useSelector((state) => {
+    return state.gameData ? state.gameData.playingNow : false;
+  });
+
+  const timesPlayed = useSelector((state) => {
+    return state.gameData ? state.gameData.timesPlayed : false;
+  });
+
+  const finishGame_button = () =>{
+
+    dispatch(finishGame(token,gameAddress,web3_accounts[0],timesPlayed))
 
   }
 
@@ -186,6 +203,13 @@ function App() {
               playAgain_button()
             }>
               Play Again 
+            </button>
+
+
+            <button onClick={() => 
+              finishGame_button()
+            }>
+              Finish Game 
             </button>
 
             {web3_available==true?

@@ -11,13 +11,13 @@ contract Token {
 
     string public symbol = "TR";
 
-    uint256 public maxAllowanceCoin = 20;
+    uint256 public maxAllowanceCoin = 400;
 
     uint256 public decimals = 18;
     uint256 public totalSupply;
 
     address public gameAddress;
-    uint256 public speedTokenGeneration = 600;
+    uint256 public speedTokenGeneration = 100;
 
     uint256 public betValueGame = 5;
 
@@ -95,7 +95,7 @@ contract Token {
     function _allowedTokensToPlay(address _from) internal {
 
         if (timeStampLastPlay[_from]==0){
-            allowance[gameAddress][_from] = 15;
+            allowance[gameAddress][_from] = (maxAllowanceCoin*60)/100;
             // allowance[gameAddress][_from] = maxAllowanceCoin;
 
             timeStampLastPlay[_from] = block.timestamp;
