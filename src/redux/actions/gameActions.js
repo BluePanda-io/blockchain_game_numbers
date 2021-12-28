@@ -53,6 +53,10 @@ export const startGame = (token,gameAddress,accountMe) => {
 
 
                 web3Info["playingNow"] = true
+
+
+                web3Info["numberOfGame"] = Math.floor(Math.random() * 10);
+
                 dispatch(_startGame(web3Info))
 
         

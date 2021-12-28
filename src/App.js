@@ -115,10 +115,18 @@ function App() {
   const timesPlayed = useSelector((state) => {
     return state.gameData ? state.gameData.timesPlayed : false;
   });
+  const numberOfGame = useSelector((state) => {
+    return state.gameData ? state.gameData.numberOfGame : false;
+  });
 
   const finishGame_button = () =>{
 
-    dispatch(finishGame(token,gameAddress,web3_accounts[0],timesPlayed))
+    if (playingNow)
+      dispatch(finishGame(token,gameAddress,web3_accounts[0],timesPlayed))
+    else
+      alert("You need to first Start the Game")
+
+    
 
   }
 
@@ -143,9 +151,105 @@ function App() {
   const [accountSelect, setAccountSelect] = useState("0x0159B7f11793741e433cf169f567aBB9d3dA0768");
 
 
+  const [Products,setProducts] = useState([{
+    name: "1",
+    disableButton: false,
+  },{
+    name: "2",
+    disableButton: false,
+  },{
+    name: "3",
+    disableButton: false,
+  },{
+    name: "4",
+    disableButton: false,
+  },{
+    name: "5",
+    disableButton: false,
+  },{
+    name: "6",
+    disableButton: false,
+  },{
+    name: "7",
+    disableButton: false,
+  },{
+    name: "8",
+    disableButton: false,
+  },{
+    name: "9",
+    disableButton: false,
+  }])
+  // const Products = [
+  //   {
+  //     name: "1",
+  //     disableButton: false,
+  //   },{
+  //     name: "2",
+  //     disableButton: false,
+  //   },{
+  //     name: "3",
+  //     disableButton: false,
+  //   },{
+  //     name: "4",
+  //     disableButton: false,
+  //   },{
+  //     name: "5",
+  //     disableButton: false,
+  //   },{
+  //     name: "6",
+  //     disableButton: false,
+  //   },{
+  //     name: "7",
+  //     disableButton: false,
+  //   },{
+  //     name: "8",
+  //     disableButton: false,
+  //   },{
+  //     name: "9",
+  //     disableButton: false,
+  //   }];
+  //   useEffect( () => {
+  //     Products[0].name = "gamoto"
+  
+  //   }, [Products]);
+
+
+    const onClickFunction = (e, name,idx) => {
+      e.preventDefault();
+      console.log("turonikadori",name,idx+1)
+      
+      let Products2 = Products
+
+      if (numberOfGame===idx){
+        finishGame_button()
+        for (let i=0;i<9;i++){
+          Products2[i].disableButton = true;
+        }
+      } else if (numberOfGame<idx){
+        playAgain_button()
+
+        for (let i=idx;i<9;i++){
+          Products2[i].disableButton = true;
+        }
+      } else {
+        playAgain_button()
+
+        for (let i=0;i<=idx;i++){
+          Products2[i].disableButton = true;
+          
+        }
+      }
+
+      setProducts(Products2)
+
+      console.log("Products = ",Products2)
+
+    }
+    
 
   return (
     <>
+    
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
@@ -192,6 +296,10 @@ function App() {
               gameTransferTokens
             </button>
 
+            <br/>
+              <br/>
+              <br/>
+              <br/>
 
             <button onClick={() => 
               startGame_button()
@@ -225,7 +333,33 @@ function App() {
               {user1_allowance} Ftoken
             </p>:true}
 
+            {Products.map((p,idx) => (
+              <button  
+              disabled = {p.disableButton}
+              onClick={e=>{ onClickFunction(e, p.name,idx); }} 
+              key={p.name}
+              >
+                {p.name}
+              </button>
+            ))}
+
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+
           </header>
+
+
+          <>
+
+              
+          
+            
+
+          </>
         </div>
     </>
 

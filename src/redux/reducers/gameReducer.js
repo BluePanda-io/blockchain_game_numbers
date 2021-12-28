@@ -6,6 +6,7 @@ import * as gameActionTags from "../actions/gameActions";
 const stateUserInitial = {
   playingNow: false,
   timesPlayed: 0,
+  numberOfGame: -1,
 };
 
 const gameReducer = (stateUser = stateUserInitial, action) => {
@@ -18,6 +19,7 @@ const gameReducer = (stateUser = stateUserInitial, action) => {
         ...stateUser,
         playingNow: payload.web3Info.playingNow,
         timesPlayed: 0,
+        numberOfGame: payload.web3Info.numberOfGame,
       };
     case gameActionTags.PLAY_AGAIN:
       console.log("sdfasdfasdfasdfa")
@@ -31,6 +33,7 @@ const gameReducer = (stateUser = stateUserInitial, action) => {
         ...stateUser,
         playingNow: false,
         timesPlayed: 0,
+        numberOfGame: -1,
       };
 
     default:
