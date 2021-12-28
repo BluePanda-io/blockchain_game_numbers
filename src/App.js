@@ -89,7 +89,7 @@ function App() {
 
   const gameTransferTokens_button = () =>{
 
-    dispatch(gameTransferTokens2(token,gameAddress,5,web3_accounts[0]))
+    dispatch(gameTransferTokens2(token,gameAddress,tokensAvailableToCollect,web3_accounts[0]))
 
   }
 
@@ -119,14 +119,28 @@ function App() {
     return state.gameData ? state.gameData.numberOfGame : false;
   });
 
+  const tokenWon = useSelector((state) => {
+    return state.gameData ? state.gameData.tokenWon : false;
+  });
+
+  const tokensAvailableToCollect = useSelector((state) => {
+    return state.userData ? state.userData.tokensAvailableToCollect : false;
+  });
+
   const finishGame_button = () =>{
 
     if (playingNow)
-      dispatch(finishGame(token,gameAddress,web3_accounts[0],timesPlayed))
+      dispatch(finishGame(token,gameAddress,web3_accounts[0],timesPlayed,tokensAvailableToCollect))
     else
       alert("You need to first Start the Game")
 
     
+
+  }
+
+  const collectMyTokens_button = () =>{
+
+    dispatch(gameTransferTokens2(token,gameAddress,tokensAvailableToCollect,web3_accounts[0]))
 
   }
 
@@ -179,62 +193,32 @@ function App() {
     name: "9",
     disableButton: false,
   }])
-  // const Products = [
-  //   {
-  //     name: "1",
-  //     disableButton: false,
-  //   },{
-  //     name: "2",
-  //     disableButton: false,
-  //   },{
-  //     name: "3",
-  //     disableButton: false,
-  //   },{
-  //     name: "4",
-  //     disableButton: false,
-  //   },{
-  //     name: "5",
-  //     disableButton: false,
-  //   },{
-  //     name: "6",
-  //     disableButton: false,
-  //   },{
-  //     name: "7",
-  //     disableButton: false,
-  //   },{
-  //     name: "8",
-  //     disableButton: false,
-  //   },{
-  //     name: "9",
-  //     disableButton: false,
-  //   }];
-  //   useEffect( () => {
-  //     Products[0].name = "gamoto"
   
-  //   }, [Products]);
-
 
     const onClickFunction = (e, name,idx) => {
       e.preventDefault();
-      console.log("turonikadori",name,idx+1)
       
       let Products2 = Products
 
-      if (numberOfGame===idx){
+      let idx1 = idx+1
+
+
+      if (numberOfGame===idx1){
         finishGame_button()
+        // alert("You Woooon yeaaaaa")
         for (let i=0;i<9;i++){
-          Products2[i].disableButton = true;
+          Products2[i].disableButton = false;
         }
-      } else if (numberOfGame<idx){
+      } else if (numberOfGame<idx1){
         playAgain_button()
 
-        for (let i=idx;i<9;i++){
+        for (let i=idx1-1;i<9;i++){
           Products2[i].disableButton = true;
         }
       } else {
         playAgain_button()
 
-        for (let i=0;i<=idx;i++){
+        for (let i=0;i<=idx1-1;i++){
           Products2[i].disableButton = true;
           
         }
@@ -242,7 +226,6 @@ function App() {
 
       setProducts(Products2)
 
-      console.log("Products = ",Products2)
 
     }
     
@@ -333,6 +316,22 @@ function App() {
               {user1_allowance} Ftoken
             </p>:true}
 
+            <button onClick={() => 
+              collectMyTokens_button()
+            }>
+              Collect My Tokens
+            </button>
+            
+            {web3_available==true?
+            <p>
+              Tokens that you won ready to collect= 
+              {tokensAvailableToCollect} Ftoken
+            </p>:true}
+
+            
+
+            {playingNow?
+            <>
             {Products.map((p,idx) => (
               <button  
               disabled = {p.disableButton}
@@ -342,6 +341,10 @@ function App() {
                 {p.name}
               </button>
             ))}
+            </>:
+            <>
+            {tokenWon>-1?<p>You just won: {tokenWon}Fcoin</p>:true}
+            </>}
 
               <br/>
               <br/>

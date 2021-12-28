@@ -28,11 +28,12 @@ export const playAgain = () => {
     };
 };
 
-const _finishGame = () => {
+const _finishGame = (web3Info) => {
 
     return {
         type: FINISH_GAME,
         payload: {
+            web3Info
         },
     };
 };
@@ -55,7 +56,7 @@ export const startGame = (token,gameAddress,accountMe) => {
                 web3Info["playingNow"] = true
 
 
-                web3Info["numberOfGame"] = Math.floor(Math.random() * 10);
+                web3Info["numberOfGame"] = Math.floor(Math.random() * 9)+1;
 
                 dispatch(_startGame(web3Info))
 
@@ -70,26 +71,37 @@ export const startGame = (token,gameAddress,accountMe) => {
 }
 
 
-export const finishGame = (token,gameAddress,accountMe,timesPlayed) => {
+export const finishGame = (token,gameAddress,accountMe,timesPlayed,tokensAvailableToCollect) => {
     return (dispatch) => {
 
         let web3Info = {}
 
         try {
 
-            console.log("timesPlayed = ",timesPlayed)
             if (timesPlayed===0){ // Find it on 1 time
-                dispatch(gameTransferTokens2(token,gameAddress,10,accountMe))
-                dispatch(_finishGame())
+                // dispatch(gameTransferTokens2(token,gameAddress,15,accountMe))
+
+                web3Info["tokenWon"] = 18
             } else if (timesPlayed===1){ // Find it on 2 time
-                dispatch(gameTransferTokens2(token,gameAddress,7,accountMe))
-                dispatch(_finishGame())
+                // dispatch(gameTransferTokens2(token,gameAddress,10,accountMe))
+                web3Info["tokenWon"] = 13
             } else if (timesPlayed===2){ // Find it on 3 time
-                dispatch(gameTransferTokens2(token,gameAddress,5,accountMe))
-                dispatch(_finishGame())
+                // dispatch(gameTransferTokens2(token,gameAddress,7,accountMe))
+                web3Info["tokenWon"] =9
+            } else if (timesPlayed===3){ // Find it on 3 time
+                // dispatch(gameTransferTokens2(token,gameAddress,7,accountMe))
+                web3Info["tokenWon"] =6
             } else if (timesPlayed >=3){ // Find it on 4+ time
-                dispatch(_finishGame())
+                web3Info["tokenWon"] = 0
             }
+
+            const tokensAvailableToCollect2 = parseInt(tokensAvailableToCollect+web3Info["tokenWon"]);
+            localStorage.setItem("tokensAvailableToCollect", tokensAvailableToCollect2);
+
+            web3Info["tokensAvailableToCollect"] = tokensAvailableToCollect2
+
+            dispatch(_finishGame(web3Info))
+
 
         } catch(err) {
            console.log("I cant sent cash ")

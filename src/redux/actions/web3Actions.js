@@ -64,6 +64,16 @@ export const web3Initialize = () => {
 
 
 
+            let tokensAvailableToCollect = localStorage.getItem('tokensAvailableToCollect')
+            if (localStorage.getItem('tokensAvailableToCollect')){
+                web3Info["tokensAvailableToCollect"] = parseInt(tokensAvailableToCollect)
+            } else {
+                localStorage.setItem("tokensAvailableToCollect", 0);
+                web3Info["tokensAvailableToCollect"] = 0
+            }
+
+
+
             dispatch(_web3Initialize(web3Info));
 
         // } catch(err) {

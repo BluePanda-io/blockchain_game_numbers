@@ -14,26 +14,25 @@ const gameReducer = (stateUser = stateUserInitial, action) => {
 
   switch (type) {
     case gameActionTags.START_GAME:
-      console.log("sdfasdfasdfasdfa")
       return {
         ...stateUser,
         playingNow: payload.web3Info.playingNow,
         timesPlayed: 0,
         numberOfGame: payload.web3Info.numberOfGame,
+        tokenWon: -1,
       };
     case gameActionTags.PLAY_AGAIN:
-      console.log("sdfasdfasdfasdfa")
       return {
         ...stateUser,
         timesPlayed: stateUser.timesPlayed + 1,
       };
     case gameActionTags.FINISH_GAME:
-      console.log("sdfasdfasdfasdfa")
       return {
         ...stateUser,
         playingNow: false,
         timesPlayed: 0,
         numberOfGame: -1,
+        tokenWon: payload.web3Info.tokenWon
       };
 
     default:
