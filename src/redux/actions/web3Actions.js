@@ -30,17 +30,20 @@ export const web3Initialize = () => {
         let web3Info = {}
 
         // try {
+            console.log("tt -> 1")
             window.web3 = new Web3(provider)
 
 
             web3Info["window_web3"] = window.web3 
 
+            console.log("tt -> 2")
 
 
             const accounts = await window.web3.eth.getAccounts()
             web3Info["accounts"] = accounts
 
 
+            console.log("tt -> 3")
             
             const networkId = await window.web3.eth.net.getId()
             const token = new window.web3.eth.Contract(Token.abi, Token.networks[networkId].address)
@@ -48,6 +51,8 @@ export const web3Initialize = () => {
             web3Info["token"] = token
 
 
+
+            console.log("tt -> 4")
 
 
             const gameAddress = await token.methods.gameAddress().call()
