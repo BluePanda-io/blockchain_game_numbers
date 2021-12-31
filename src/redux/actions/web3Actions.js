@@ -27,6 +27,15 @@ export const web3Initialize = () => {
 
         const provider = await detectEthereumProvider(); 
 
+        // if (provider){
+        //     startApp(provider)
+        // } else {
+        //     console.log("install metamask")
+        // }
+
+        // const accounts3 = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        // const account3 = accounts3[0];
+
         let web3Info = {}
 
         // try {
