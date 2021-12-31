@@ -30,9 +30,9 @@ export const web3Initialize = () => {
         let web3Info = {}
 
         // try {
-            console.log("tt -> 1",ethereum)
-            console.log("tt -> 1.5",provider)
-            window.web3 = new Web3(ethereum)
+            // console.log("tt -> 1",ethereum)
+            // console.log("tt -> 1.5",provider)
+            window.web3 = new Web3(provider)
 
 
             web3Info["window_web3"] = window.web3 
