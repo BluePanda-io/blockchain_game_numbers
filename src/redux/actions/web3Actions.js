@@ -30,7 +30,7 @@ export const web3Initialize = () => {
         let web3Info = {}
 
         // try {
-            console.log("tt -> 1")
+            console.log("tt -> 1",provider)
             window.web3 = new Web3(provider)
 
 
