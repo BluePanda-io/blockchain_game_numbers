@@ -73,6 +73,13 @@ function App() {
     return state.userData ? state.userData.allowance : null;
   });
 
+
+  // window.ethereum.on('accountsChanged', function (accounts) {
+  //   console.log("The ddress changed SOS (!!!)= ",accounts)
+  // })
+
+  
+
   const connectMetamask_button = async () =>{
 
     const accounts3 = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -249,7 +256,7 @@ function App() {
             <img src={logo} className="App-logo" alt="logo" />
             {web3_available==true?
             <p>
-              Your Address = 
+              HEY HEY TORA Your Address = 
               {web3_accounts}
 
               {/* This is the Token Total Supply:{totalSupply} */}

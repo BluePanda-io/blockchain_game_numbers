@@ -1475,12 +1475,27 @@
     "42": {
       "events": {},
       "links": {},
+<<<<<<< HEAD
       "address": "0x057D04909C5361E2beF304793F6C115F3F306B00",
       "transactionHash": "0xbaaf3c7e28289db7a99cf5542cce342680dcc30ecd30d9986896c5eea1c6db00"
     }
   },
   "schemaVersion": "3.4.4",
   "updatedAt": "2021-12-31T06:41:37.715Z",
+=======
+      "address": "0x84302F4d9f51e4f03F912aAE6865B7b0EB61aA91",
+      "transactionHash": "0xd2a4a9e9f2dc7e68612ec822f3e8249cf578f49d28ab9edcf4751f9175864ee2"
+    },
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0x079a8FF701bc7E8B3a9a4F2588170830a39D1AbA",
+      "transactionHash": "0xcfd6fc1c0b338f764d59dc056759db750cc02ec96f7324ad1e1e1f160e8714e1"
+    }
+  },
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-01-01T08:40:14.457Z",
+>>>>>>> V0.9_fixLocalHost
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

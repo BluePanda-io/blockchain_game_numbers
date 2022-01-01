@@ -57,6 +57,13 @@ export const web3Initialize = () => {
             console.log("tt -> 3",accounts)
             
             const networkId = await window.web3.eth.net.getId()
+
+            console.log("tt -> 3.5",networkId)
+            console.log("tt -> 3.7",Token.abi)
+            console.log("tt -> 3.8",Token.networks[networkId])
+            console.log("tt -> 3.8",Token.networks)
+
+
             const token = new window.web3.eth.Contract(Token.abi, Token.networks[networkId].address)
 
             web3Info["token"] = token
@@ -74,11 +81,16 @@ export const web3Initialize = () => {
             const userBalance = await token.methods.balanceOf(accounts[0]).call()
             web3Info["userBalance"] = userBalance
 
+            console.log("tt -> 5",userBalance)
+
+
 
             const userAllowance = await token.methods.allowance(gameAddress,accounts[0]).call()
             web3Info["userAllowance"] = userAllowance
 
+            console.log("tt -> 5",userAllowance)
 
+            
 
             let tokensAvailableToCollect = localStorage.getItem('tokensAvailableToCollect')
             if (localStorage.getItem('tokensAvailableToCollect')){
@@ -88,6 +100,8 @@ export const web3Initialize = () => {
                 web3Info["tokensAvailableToCollect"] = 0
             }
 
+
+            console.log("tt -> 6",web3Info["tokensAvailableToCollect"])
 
 
             dispatch(_web3Initialize(web3Info));
