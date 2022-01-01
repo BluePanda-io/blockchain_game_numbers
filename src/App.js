@@ -73,6 +73,13 @@ function App() {
     return state.userData ? state.userData.allowance : null;
   });
 
+
+  // window.ethereum.on('accountsChanged', function (accounts) {
+  //   console.log("The ddress changed SOS (!!!)= ",accounts)
+  // })
+
+  
+
   const connectMetamask_button = async () =>{
 
     const accounts3 = await window.ethereum.request({ method: 'eth_requestAccounts' });
