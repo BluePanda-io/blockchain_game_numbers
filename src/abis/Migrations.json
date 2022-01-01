@@ -1387,21 +1387,12 @@
     "5777": {
       "events": {},
       "links": {},
-<<<<<<< HEAD
-      "address": "0xF7C010bf15bFe0c0f3DD85784BB2ba7b729880E6",
-      "transactionHash": "0x4c661ac8fd8a027e1c849f8e4862e14a71ee060fc62e988858a6ad0d59f70048"
-    }
-  },
-  "schemaVersion": "3.4.4",
-  "updatedAt": "2022-01-01T08:01:59.705Z",
-=======
       "address": "0x079a8FF701bc7E8B3a9a4F2588170830a39D1AbA",
       "transactionHash": "0xcfd6fc1c0b338f764d59dc056759db750cc02ec96f7324ad1e1e1f160e8714e1"
     }
   },
   "schemaVersion": "3.4.4",
   "updatedAt": "2022-01-01T08:40:14.457Z",
->>>>>>> V0.9.2_changeAddressesWithMetamask
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
