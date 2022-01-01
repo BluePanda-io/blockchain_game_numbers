@@ -26,6 +26,8 @@ import {NetworkChange} from "./components/networkChangeMetaMask"
 
 import {GameToken} from "./components/gameToken"
 
+import {SentTokens} from "./components/sentTokens"
+
 
 
 
@@ -58,25 +60,16 @@ function App() {
   const gameAddress = useSelector((state) => {
     return state.web3Data ? state.web3Data.gameAddress : null;
   });
+  
 
-  // const changeNetwork = async (networkName ) => {
-  //   try {
-  //     console.log("networksInfo[networkName] = ",networksInfo[`${networkName}`],networkName)
-  //     if (!window.ethereum) throw new Error("No crypto wallet found");
-  //     await window.ethereum.request({
-  //       method: "wallet_addEthereumChain",
-  //       params: [
-  //         {
-  //           ...networksInfo[networkName]
-  //         }
-  //       ]
-  //     });
-  //   } catch (err) {
-  //     console.log("error",err.message);
-  //   }
-  // };
+  const playAgain_button = () =>{
 
+    if (playingNow)
+      dispatch(playAgain())
+    else
+      alert("You need to first Start the Game")
 
+  }
 
   const [totalSupply, setTotalSupply] = useState("");
   useEffect( () => {
@@ -87,14 +80,6 @@ function App() {
     }
 
   }, [token]);
-
-  const user1_tokens = useSelector((state) => {
-    return state.userData ? state.userData.balance : null;
-  });
-
-  const user1_allowance = useSelector((state) => {
-    return state.userData ? state.userData.allowance : null;
-  });
 
 
   window.ethereum.on('accountsChanged', function (accounts) {
@@ -107,28 +92,6 @@ function App() {
     window.location.reload();
   });
   
-
-
-  const makeTransaction = () =>{
-
-    dispatch(transferTokens(token,accountSelect,inputNumberTokens,web3_accounts[0]))
-    // dispatch(gameTransferTokens(token,web3_accounts[0],inputNumberTokens,web3_accounts[0]))
-
-  }
-
-
-
-  const allowedTokensToPlay_button = () =>{
-
-    dispatch(allowedTokensToPlay(token,gameAddress,web3_accounts[0]))
-
-  }
-
-  const gameTransferTokens_button = () =>{
-
-    dispatch(gameTransferTokens2(token,gameAddress,tokensAvailableToCollect,web3_accounts[0]))
-
-  }
 
   
 
@@ -163,33 +126,7 @@ function App() {
     
 
   }
-
-  const collectMyTokens_button = () =>{
-
-    dispatch(gameTransferTokens2(token,gameAddress,tokensAvailableToCollect,web3_accounts[0]))
-
-  }
-
-
-  const [inputNumberTokens, setInputNumberTokens] = useState(0);
-
-  const options = [
-    {
-      label: "Account 2",
-      value: "0xccf83688a7B73cd8Db4BE77Be23099D2ABC5f4B1",
-    },
-    {
-      label: "Account 3",
-      value: "0x5004d250150Cd0644945F56BeDF15dEc934FA10d",
-    },
-    {
-      label: "Account 4",
-      value: "0x3DeB27cd0389D49f8404a0059bD70fF55d2EB37B",
-    },
-  ];
-
-  const [accountSelect, setAccountSelect] = useState("0x0159B7f11793741e433cf169f567aBB9d3dA0768");
-
+  
 
   const [Products,setProducts] = useState([{
     name: "1",
@@ -236,13 +173,13 @@ function App() {
           Products2[i].disableButton = false;
         }
       } else if (numberOfGame<idx1){
-        // playAgain_button()
+        playAgain_button()
 
         for (let i=idx1-1;i<9;i++){
           Products2[i].disableButton = true;
         }
       } else {
-        // playAgain_button()
+        playAgain_button()
 
         for (let i=0;i<=idx1-1;i++){
           Products2[i].disableButton = true;
@@ -278,42 +215,7 @@ function App() {
             {web3_available==true?
             <>
 
-            <input 
-              value={inputNumberTokens} 
-              onChange={(e)=>{setInputNumberTokens(e.target.value)}}
-            />
-
-            <select
-              value={accountSelect}
-              onChange={(e) => {
-                setAccountSelect(e.target.value)
-              }}
-            >
-              {options.map((option) => (
-                <option value={option.value}>{option.label}</option>
-              ))}
-            </select>
-
-
-            
-
-            <button onClick={() => 
-              makeTransaction()
-            }>
-              Sent cash
-            </button>
-
-            <button onClick={() => 
-              allowedTokensToPlay_button()
-            }>
-              allowedTokensToPlay
-            </button>
-
-            <button onClick={() => 
-              gameTransferTokens_button()
-            }>
-              gameTransferTokens
-            </button>
+            <SentTokens/>
 
             <br/>
               <br/>
@@ -322,6 +224,7 @@ function App() {
 
 
             <GameToken />
+            
     
 
             </>:true}
