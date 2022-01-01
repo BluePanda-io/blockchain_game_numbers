@@ -74,9 +74,10 @@ function App() {
   });
 
 
-  // window.ethereum.on('accountsChanged', function (accounts) {
-  //   console.log("The ddress changed SOS (!!!)= ",accounts)
-  // })
+  window.ethereum.on('accountsChanged', function (accounts) {
+    console.log("The ddress changed SOS (!!!)= ",accounts)
+    dispatch(web3Initialize())
+  })
 
   
 
