@@ -36,30 +36,6 @@ const _checkBalance = (web3Info) => {
 
 
 
-// export const checkBalance = (token,account) => {
-//     return (dispatch) => {
-
-//         let web3Info = {}
-
-//         try {
-           
-//             token.methods.balanceOf(account).call().then(res=>{
-
-//                 web3Info["userBalance"] = res
-
-
-//                 dispatch(_checkBalance(web3Info));
-//             })
-
-            
-
-//         } catch(err) {
-//            console.log("No Etherium Wallet")
-//         }
-        
-//     }
-// }
-
 
 export const checkBalance = (token,account) => {
     return (dispatch) => {

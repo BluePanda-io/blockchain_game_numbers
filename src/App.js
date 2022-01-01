@@ -45,21 +45,13 @@ function App() {
   }, []);
 
 
-  const web3_available = useSelector((state) => {
-    return state.web3Data ? state.web3Data.isAvailable : false;
-  });
+  const web3_available = useSelector((state) => {return state.web3Data ? state.web3Data.isAvailable : false;});
 
-  const web3_accounts = useSelector((state) => {
-    return state.userData ? state.userData.accounts : {};
-  });
+  const web3_accounts = useSelector((state) => {return state.userData ? state.userData.accounts : {};});
 
-  const token = useSelector((state) => {
-    return state.web3Data ? state.web3Data.token : null;
-  });
+  const token = useSelector((state) => {return state.web3Data ? state.web3Data.token : null;});
 
-  const gameAddress = useSelector((state) => {
-    return state.web3Data ? state.web3Data.gameAddress : null;
-  });
+  const gameAddress = useSelector((state) => {return state.web3Data ? state.web3Data.gameAddress : null;});
   
 
   const playAgain_button = () =>{
@@ -71,15 +63,6 @@ function App() {
 
   }
 
-  const [totalSupply, setTotalSupply] = useState("");
-  useEffect( () => {
-    if (token.methods){
-      token.methods.totalSupply().call().then((res)=>{
-        setTotalSupply(res)
-      })
-    }
-
-  }, [token]);
 
 
   window.ethereum.on('accountsChanged', function (accounts) {
@@ -97,24 +80,15 @@ function App() {
 
   
 
-  const playingNow = useSelector((state) => {
-    return state.gameData ? state.gameData.playingNow : false;
-  });
+  const playingNow = useSelector((state) => {return state.gameData ? state.gameData.playingNow : false});
 
-  const timesPlayed = useSelector((state) => {
-    return state.gameData ? state.gameData.timesPlayed : false;
-  });
-  const numberOfGame = useSelector((state) => {
-    return state.gameData ? state.gameData.numberOfGame : false;
-  });
+  const timesPlayed = useSelector((state) => {return state.gameData ? state.gameData.timesPlayed : false});
+  const numberOfGame = useSelector((state) => {return state.gameData ? state.gameData.numberOfGame : false});
 
-  const tokenWon = useSelector((state) => {
-    return state.gameData ? state.gameData.tokenWon : false;
-  });
+  const tokenWon = useSelector((state) => {return state.gameData ? state.gameData.tokenWon : false});
 
-  const tokensAvailableToCollect = useSelector((state) => {
-    return state.userData ? state.userData.tokensAvailableToCollect : false;
-  });
+  const tokensAvailableToCollect = useSelector((state) => {return state.userData ? state.userData.tokensAvailableToCollect : false});
+
 
   const finishGame_button = () =>{
 
@@ -122,9 +96,6 @@ function App() {
       dispatch(finishGame(token,gameAddress,web3_accounts[0],timesPlayed,tokensAvailableToCollect))
     else
       alert("You need to first Start the GameToken")
-
-    
-
   }
   
 
@@ -158,7 +129,7 @@ function App() {
   }])
   
 
-    const onClickFunction = (e, name,idx) => {
+    const clickNumberOfGame = (e, name,idx) => {
       e.preventDefault();
       
       let Products2 = Products
@@ -234,7 +205,7 @@ function App() {
             {Products.map((p,idx) => (
               <button  
               disabled = {p.disableButton}
-              onClick={e=>{ onClickFunction(e, p.name,idx); }} 
+              onClick={e=>{ clickNumberOfGame(e, p.name,idx); }} 
               key={p.name}
               >
                 {p.name}
