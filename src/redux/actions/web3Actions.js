@@ -105,7 +105,7 @@ export const web3Initialize = () => {
 
         let web3Info = {}
 
-        // try {
+        try {
             console.log("tt -> 0.5",Token.abi)
             console.log("tt -> 1",window.ethereum)
             console.log("tt -> 1.5",provider)
@@ -178,9 +178,9 @@ export const web3Initialize = () => {
 
             dispatch(_web3Initialize(web3Info));
 
-        // } catch(err) {
-        //    console.log("No Etherium Wallet")
-        // }
+        } catch(err) {
+           console.log("No Etherium Wallet")
+        }
 
 
 

@@ -1,5 +1,7 @@
 import React, {useEffect,useState} from 'react'
 
+import Web3 from 'web3'
+
 
 
 import logo from './logo.svg';
@@ -87,10 +89,45 @@ function App() {
 
   const connectMetamask_button = async () =>{
 
+    console.log("het")
+
     const accounts3 = await window.ethereum.request({ method: 'eth_requestAccounts' });
     const account3 = accounts3[0];
 
-    console.log("account3 = ",account3)
+    
+    const networkId = await window.web3.eth.net.getId()
+    
+    console.log("account3 = ",accounts3,networkId,Token.networks[networkId])
+
+    if (Token.networks[networkId]==undefined){
+      // alert("The network that this coin is added is: Kovan \n you are not in this network right now")
+
+      const web3 = await Moralis.Web3.enable();
+
+      await web3.currentProvider.request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            chainId: "0x13881",
+            chainName: "Mumbai",
+            rpcUrls: ["https://rpc-mumbai.matic.today"],
+            nativeCurrency: {
+              name: "Matic",
+              symbol: "Matic",
+              decimals: 18,
+            },
+            blockExplorerUrls: ["https://explorer-mumbai.maticvigil.com"],
+          },
+        ],
+      });
+    }
+
+   
+    
+    // const token = new window.web3.eth.Contract(Token.abi, Token.networks[networkId].address)
+
+
+
 
   }
 
@@ -274,6 +311,9 @@ function App() {
             </button>
 
 
+            {web3_available==true?
+            <>
+
             <input 
               value={inputNumberTokens} 
               onChange={(e)=>{setInputNumberTokens(e.target.value)}}
@@ -360,7 +400,7 @@ function App() {
               {tokensAvailableToCollect} Ftoken
             </p>:true}
 
-            
+            </>:true}
 
             {playingNow?
             <>
