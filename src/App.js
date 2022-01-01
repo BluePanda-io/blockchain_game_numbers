@@ -24,7 +24,7 @@ import {startGame,playAgain,finishGame} from "./redux/actions/gameActions"
 
 import {NetworkChange} from "./components/networkChangeMetaMask"
 
-import {Game} from "./components/gameMechanics"
+import {GameToken} from "./components/gameToken"
 
 
 
@@ -130,20 +130,9 @@ function App() {
 
   }
 
-  const startGame_button = () =>{
+  
 
-    dispatch(startGame(token,gameAddress,web3_accounts[0]))
-
-  }
-
-  const playAgain_button = () =>{
-
-    if (playingNow)
-      dispatch(playAgain())
-    else
-      alert("You need to first Start the Game")
-
-  }
+  
 
   const playingNow = useSelector((state) => {
     return state.gameData ? state.gameData.playingNow : false;
@@ -169,7 +158,7 @@ function App() {
     if (playingNow)
       dispatch(finishGame(token,gameAddress,web3_accounts[0],timesPlayed,tokensAvailableToCollect))
     else
-      alert("You need to first Start the Game")
+      alert("You need to first Start the GameToken")
 
     
 
@@ -247,13 +236,13 @@ function App() {
           Products2[i].disableButton = false;
         }
       } else if (numberOfGame<idx1){
-        playAgain_button()
+        // playAgain_button()
 
         for (let i=idx1-1;i<9;i++){
           Products2[i].disableButton = true;
         }
       } else {
-        playAgain_button()
+        // playAgain_button()
 
         for (let i=0;i<=idx1-1;i++){
           Products2[i].disableButton = true;
@@ -281,11 +270,6 @@ function App() {
               {/* This is the Token Total Supply:{totalSupply} */}
             </p>:true}
 
-            {/* <button onClick={() => 
-              connectMetamask_button()
-            }>
-              Connect Metamask
-            </button> */}
 
             <NetworkChange />
 
@@ -337,52 +321,8 @@ function App() {
               <br/>
 
 
-            <Game />
-
-
-            <button onClick={() => 
-              startGame_button()
-            }>
-              Game Start 
-            </button>
-
-            <button onClick={() => 
-              playAgain_button()
-            }>
-              Play Again 
-            </button>
-
-
-            <button onClick={() => 
-              finishGame_button()
-            }>
-              Finish Game 
-            </button>
-
-            {web3_available==true?
-            <p>
-              You have this amount of cash = 
-              {user1_tokens} Ftoken
-            </p>:true}
-
-
-            {web3_available==true?
-            <p>
-              You have this allowance to play the game = 
-              {user1_allowance} Ftoken
-            </p>:true}
-
-            <button onClick={() => 
-              collectMyTokens_button()
-            }>
-              Collect My Tokens
-            </button>
-            
-            {web3_available==true?
-            <p>
-              Tokens that you won ready to collect= 
-              {tokensAvailableToCollect} Ftoken
-            </p>:true}
+            <GameToken />
+    
 
             </>:true}
 
