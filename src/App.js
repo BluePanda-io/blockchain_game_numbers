@@ -73,6 +73,15 @@ function App() {
     return state.userData ? state.userData.allowance : null;
   });
 
+  const connectMetamask_button = async () =>{
+
+    const accounts3 = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    const account3 = accounts3[0];
+
+    console.log("account3 = ",account3)
+
+  }
+
 
   const makeTransaction = () =>{
 
@@ -80,6 +89,8 @@ function App() {
     // dispatch(gameTransferTokens(token,web3_accounts[0],inputNumberTokens,web3_accounts[0]))
 
   }
+
+
 
   const allowedTokensToPlay_button = () =>{
 
@@ -244,6 +255,12 @@ function App() {
               {/* This is the Token Total Supply:{totalSupply} */}
             </p>:true}
 
+            <button onClick={() => 
+              connectMetamask_button()
+            }>
+              Connect Metamask
+            </button>
+
 
             <input 
               value={inputNumberTokens} 
@@ -260,6 +277,9 @@ function App() {
                 <option value={option.value}>{option.label}</option>
               ))}
             </select>
+
+
+            
 
             <button onClick={() => 
               makeTransaction()

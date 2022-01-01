@@ -27,20 +27,34 @@ export const web3Initialize = () => {
 
         const provider = await detectEthereumProvider(); 
 
+        // if (provider){
+        //     startApp(provider)
+        // } else {
+        //     console.log("install metamask")
+        // }
+
+        // const accounts3 = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        // const account3 = accounts3[0];
+
         let web3Info = {}
 
         // try {
-            window.web3 = new Web3(provider)
+            console.log("tt -> 0.5",Token.abi)
+            console.log("tt -> 1",window.ethereum)
+            console.log("tt -> 1.5",provider)
+            window.web3 = new Web3(window.ethereum)
 
 
             web3Info["window_web3"] = window.web3 
 
+            console.log("tt -> 2",window.web3 )
 
 
             const accounts = await window.web3.eth.getAccounts()
             web3Info["accounts"] = accounts
 
 
+            console.log("tt -> 3",accounts)
             
             const networkId = await window.web3.eth.net.getId()
             const token = new window.web3.eth.Contract(Token.abi, Token.networks[networkId].address)
@@ -48,6 +62,8 @@ export const web3Initialize = () => {
             web3Info["token"] = token
 
 
+
+            console.log("tt -> 4",token)
 
 
             const gameAddress = await token.methods.gameAddress().call()
