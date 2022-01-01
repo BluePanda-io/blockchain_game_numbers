@@ -7,7 +7,7 @@ git push origin $OUTPUT
 
 git checkout deployBranch
 
-git merge OUTPUT
+git merge $OUTPUT
 
 git add .
 git commit -m "Deploy to the System"
