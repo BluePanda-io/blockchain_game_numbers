@@ -7,7 +7,11 @@ git push origin $OUTPUT
 
 git checkout deployBranch
 
+<<<<<<< HEAD
 git merge OUTPUT
+=======
+git merge $OUTPUT
+>>>>>>> V0.9_fixLocalHost
 
 git add .
 git commit -m "Deploy to the System"

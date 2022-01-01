@@ -249,7 +249,7 @@ function App() {
             <img src={logo} className="App-logo" alt="logo" />
             {web3_available==true?
             <p>
-              Your Address = 
+              HEY HEY TORA Your Address = 
               {web3_accounts}
 
               {/* This is the Token Total Supply:{totalSupply} */}
