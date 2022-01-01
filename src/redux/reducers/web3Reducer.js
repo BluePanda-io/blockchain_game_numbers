@@ -21,6 +21,14 @@ const web3Reducer = (stateUser = stateUserInitial, action) => {
         gameAddress: payload.web3Info.gameAddress,
         isAvailable: true,
       };
+    case web3ActionTags.CHANGE_ADDRESS_METAMASK:
+      return {
+        ...stateUser,
+        web3: payload.web3Info.window_web3,
+        token: payload.web3Info.token,
+        gameAddress: payload.web3Info.gameAddress,
+        isAvailable: true,
+      };
 
     default:
       return {...stateUser};

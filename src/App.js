@@ -79,6 +79,10 @@ function App() {
     dispatch(web3Initialize())
   })
 
+
+  window.ethereum.on('chainChanged', (chainId) => {
+    window.location.reload();
+  });
   
 
   const connectMetamask_button = async () =>{
@@ -169,15 +173,15 @@ function App() {
   const options = [
     {
       label: "Account 2",
-      value: "0x0159B7f11793741e433cf169f567aBB9d3dA0768",
+      value: "0xccf83688a7B73cd8Db4BE77Be23099D2ABC5f4B1",
     },
     {
       label: "Account 3",
-      value: "0x030C645D235e31617c17524cBd2846e376a834bC",
+      value: "0x5004d250150Cd0644945F56BeDF15dEc934FA10d",
     },
     {
       label: "Account 4",
-      value: "0x0AEEaD84172ef58062eBD70697F22ABf13a302E2",
+      value: "0x3DeB27cd0389D49f8404a0059bD70fF55d2EB37B",
     },
   ];
 
