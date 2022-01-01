@@ -35,58 +35,63 @@ const _changeAddressMetamask = (web3Info) => {
 export const changeAddressMetamask = () => {
     return async (dispatch) => {
 
+        
 
         const provider = await detectEthereumProvider(); 
 
         let web3Info = {}
+        
+        try {
 
-        window.web3 = new Web3(window.ethereum)
-
-
-        web3Info["window_web3"] = window.web3 
-
+            window.web3 = new Web3(window.ethereum)
 
 
-        const accounts = await window.web3.eth.getAccounts()
-        web3Info["accounts"] = accounts
-
-
-        const networkId = await window.web3.eth.net.getId()
+            web3Info["window_web3"] = window.web3 
 
 
 
-        const token = new window.web3.eth.Contract(Token.abi, Token.networks[networkId].address)
-
-        web3Info["token"] = token
-
+            const accounts = await window.web3.eth.getAccounts()
+            web3Info["accounts"] = accounts
 
 
-
-        const gameAddress = await token.methods.gameAddress().call()
-        web3Info["gameAddress"] = gameAddress
+            const networkId = await window.web3.eth.net.getId()
 
 
 
-        const userBalance = await token.methods.balanceOf(accounts[0]).call()
-        web3Info["userBalance"] = userBalance
+            const token = new window.web3.eth.Contract(Token.abi, Token.networks[networkId].address)
+
+            web3Info["token"] = token
 
 
 
-        const userAllowance = await token.methods.allowance(gameAddress,accounts[0]).call()
-        web3Info["userAllowance"] = userAllowance
+
+            const gameAddress = await token.methods.gameAddress().call()
+            web3Info["gameAddress"] = gameAddress
 
 
-        const startAddress = web3Info["accounts"][0].substring(0, 5)
+
+            const userBalance = await token.methods.balanceOf(accounts[0]).call()
+            web3Info["userBalance"] = userBalance
 
 
-        let tokensAvailableToCollect = localStorage.getItem(`tokensAvailableToCollect_${startAddress}`)
-        if (localStorage.getItem(`tokensAvailableToCollect_${startAddress}`)){
-            web3Info["tokensAvailableToCollect"] = parseInt(tokensAvailableToCollect)
-        } else {
-            localStorage.setItem(`tokensAvailableToCollect_${startAddress}`, 0);
-            web3Info["tokensAvailableToCollect"] = 0
+
+            const userAllowance = await token.methods.allowance(gameAddress,accounts[0]).call()
+            web3Info["userAllowance"] = userAllowance
+
+
+            const startAddress = web3Info["accounts"][0].substring(0, 5)
+
+
+            let tokensAvailableToCollect = localStorage.getItem(`tokensAvailableToCollect_${startAddress}`)
+            if (localStorage.getItem(`tokensAvailableToCollect_${startAddress}`)){
+                web3Info["tokensAvailableToCollect"] = parseInt(tokensAvailableToCollect)
+            } else {
+                localStorage.setItem(`tokensAvailableToCollect_${startAddress}`, 0);
+                web3Info["tokensAvailableToCollect"] = 0
+            }
+        } catch {
+            console.log("error with metamask")
         }
-
 
 
 
