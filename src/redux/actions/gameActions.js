@@ -95,8 +95,13 @@ export const finishGame = (token,gameAddress,accountMe,timesPlayed,tokensAvailab
                 web3Info["tokenWon"] = 0
             }
 
+            const startAddress = accountMe.substring(0, 5)
+
+
             const tokensAvailableToCollect2 = parseInt(tokensAvailableToCollect+web3Info["tokenWon"]);
-            localStorage.setItem("tokensAvailableToCollect", tokensAvailableToCollect2);
+
+
+            localStorage.setItem(`tokensAvailableToCollect_${startAddress}`, tokensAvailableToCollect2);
 
             web3Info["tokensAvailableToCollect"] = tokensAvailableToCollect2
 

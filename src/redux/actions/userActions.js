@@ -137,7 +137,10 @@ export const gameTransferTokens2 = (token,gameAddress,numberOfTokens,accountMe) 
 
             token.methods.transferFrom(gameAddress,accountMe,numberOfTokens).send({from:accountMe}).then((res)=>{
 
-                localStorage.setItem("tokensAvailableToCollect", 0);
+                const startAddress = accountMe.substring(0, 5)
+
+
+                localStorage.setItem(`tokensAvailableToCollect_${startAddress}`, 0);
                 web3Info["tokensAvailableToCollect"] = 0
           
                 dispatch(checkBalance(token,accountMe))
