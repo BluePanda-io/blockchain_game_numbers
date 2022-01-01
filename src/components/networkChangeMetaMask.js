@@ -76,9 +76,8 @@ export const NetworkChange = ({}) => {
             console.log("account3 = ",accounts3,networkId,Token.networks[networkId])
         
             if (Token.networks[networkId]==undefined){
-              changeNetwork("polygon")
-        
-        
+            //   changeNetwork("polygon")
+                alert("You need to go to Kovan Network")
             }
         }
     

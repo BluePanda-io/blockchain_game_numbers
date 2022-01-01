@@ -24,46 +24,9 @@ import {startGame,playAgain,finishGame} from "./redux/actions/gameActions"
 
 import {NetworkChange} from "./components/networkChangeMetaMask"
 
+import {Game} from "./components/gameMechanics"
 
-// const networksInfo = {
-//   // https://chainid.network/chains.json
-//   polygon: {
-//     chainId: `0x${Number(137).toString(16)}`,
-//     chainName: "Polygon Mainnet",
-//     nativeCurrency: {
-//       name: "MATIC",
-//       symbol: "MATIC",
-//       decimals: 18
-//     },
-//     rpcUrls: ["https://polygon-rpc.com/"],
-//     blockExplorerUrls: ["https://polygonscan.com/"]
-//   },
-//   bsc: {
-//     chainId: `0x${Number(56).toString(16)}`,
-//     chainName: "Binance Smart Chain Mainnet",
-//     nativeCurrency: {
-//       name: "Binance Chain Native Token",
-//       symbol: "BNB",
-//       decimals: 18
-//     },
-//     rpcUrls: [
-//       "https://bsc-dataseed1.binance.org",
-//       "https://bsc-dataseed2.binance.org",
-//       "https://bsc-dataseed3.binance.org",
-//       "https://bsc-dataseed4.binance.org",
-//       "https://bsc-dataseed1.defibit.io",
-//       "https://bsc-dataseed2.defibit.io",
-//       "https://bsc-dataseed3.defibit.io",
-//       "https://bsc-dataseed4.defibit.io",
-//       "https://bsc-dataseed1.ninicoin.io",
-//       "https://bsc-dataseed2.ninicoin.io",
-//       "https://bsc-dataseed3.ninicoin.io",
-//       "https://bsc-dataseed4.ninicoin.io",
-//       "wss://bsc-ws-node.nariox.org"
-//     ],
-//     blockExplorerUrls: ["https://bscscan.com"]
-//   },
-// };
+
 
 
 function App() {
@@ -144,40 +107,6 @@ function App() {
     window.location.reload();
   });
   
-
-  // const connectMetamask_button = async () =>{
-
-  //   console.log("het")
-
-  //   const accounts3 = await window.ethereum.request({ method: 'eth_requestAccounts' });
-  //   const account3 = accounts3[0];
-
-    
-  //   const networkId = await window.web3.eth.net.getId()
-    
-  //   console.log("account3 = ",accounts3,networkId,Token.networks[networkId])
-
-  //   if (Token.networks[networkId]==undefined){
-  //     // alert("The network that this coin is added is: Kovan \n you are not in this network right now")
-
-  //     // await window.web3.setProvider('http://127.0.0.1:7545');
-    
-  //     // await window.web3.setProvider(new Web3.providers.WebsocketProvider('http://127.0.0.1:7545'));
-  //     // changeNetwork("polygon")
-  //     changeNetwork("kovan")
-  //     // changeNetwork("ropsten")
-
-
-  //   }
-
-   
-    
-  //   // const token = new window.web3.eth.Contract(Token.abi, Token.networks[networkId].address)
-
-
-
-
-  // }
 
 
   const makeTransaction = () =>{
@@ -361,6 +290,7 @@ function App() {
             <NetworkChange />
 
 
+
             {web3_available==true?
             <>
 
@@ -405,6 +335,10 @@ function App() {
               <br/>
               <br/>
               <br/>
+
+
+            <Game />
+
 
             <button onClick={() => 
               startGame_button()
