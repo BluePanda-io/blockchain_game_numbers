@@ -1,6 +1,12 @@
 pragma solidity ^0.5.0;
 
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+
+
 contract NFT  {
+
+    using SafeMath for uint;
+
 
     string public name = "NFT Game";
 
@@ -25,18 +31,16 @@ contract NFT  {
 
     function _mint(address _to, uint256 _tokenId) internal {
         require(_to!=address(0), 'ERC721: minting to the zero address');
-        require(_tokenOwner[_tokenId]==address(0)'ERC721: token already exist'); // Require that this token ID dont exist 
+        require(_tokenOwner[_tokenId]==address(0),'ERC721: token already exist'); // Require that this token ID dont exist 
 
         _tokenOwner[_tokenId] = _to;
         _OwnedTokensCount[_to] = _OwnedTokensCount[_to].add(1);
 
 
-        Transfer(address(0),_to,_tokenId);
-
-        return (true);
+        emit Transfer(address(0),_to,_tokenId);
     }
 
-    function _mint(string memory _NFT) public {
+    function mint(string memory _NFT) public {
 
         require(_NFT_exists[_NFT]==false,'NFT: error already excist');
      
@@ -51,6 +55,20 @@ contract NFT  {
         _NFT_exists[_NFT] = true;
     }
 
+
+    function balanceOf(address _owner) public view returns (uint256) {
+        require(_owner!=address(0), 'ERC721 balanceOf: Address is not zero');
+
+        return _OwnedTokensCount[_owner];
+    }
+
+    function ownerOf(uint256 _tokenId) public view returns (address) {
+        address _owner = _tokenOwner[_tokenId];
+
+        require(_owner!=address(0), 'ERC721 ownerOf: we dont have an owner');
+
+        return _owner;
+    }
 
 
 }
