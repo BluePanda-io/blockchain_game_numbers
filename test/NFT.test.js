@@ -122,5 +122,95 @@ contract('nft',([deployer,receiver,exchange,user1,user2])=>{
 
     })
 
+    describe('NFT Enumarate Test',()=>{
+
+        describe('Success',() =>{
+
+            let nftDirectory = 'sdf.txt'
+            let nftDirectory3 = 'sdf3.txt'
+            let nftDirectory2 = 'sdf2.txt'
+            let nftDirectory4 = 'sdf4.txt'
+
+            let result
+
+            beforeEach(async () => {
+                result =  await nft.mint(nftDirectory)
+                result =  await nft.mint(nftDirectory3)
+
+                result =  await nft.mint(nftDirectory2,{from: user1})
+                result =  await nft.mint(nftDirectory4)
+
+                
+            })
+
+            it('Check the nfts of a user saved on the file', async ()=>{
+
+                result = await nft.tokenOfOwnerByIndex(deployer,0)
+                // console.log("tokenOfOwnerByIndex =",result.toString())
+                result.toString().should.equal("0") // he have two nfts
+
+                result = await nft.tokenOfOwnerByIndex(deployer,1)
+                result.toString().should.equal("1") // he have two nfts
+
+                result = await nft.tokenOfOwnerByIndex(deployer,2)
+                result.toString().should.equal("3") // he have two nfts
+
+            })
+
+            it('Check all the token indexing', async ()=>{
+
+                result = await nft.tokenByIndex(0)
+                result.toString().should.equal("0") // he have two nfts
+
+                result = await nft.tokenByIndex(1)
+                result.toString().should.equal("1") // he have two nfts
+
+                result = await nft.tokenByIndex(2)
+                result.toString().should.equal("2") // he have two nfts
+
+            })
+
+            
+        })
+    })
+
+    describe('NFT Transfer',()=>{
+
+        describe('Success',() =>{
+
+            let nftDirectory = 'sdf.txt'
+            let nftDirectory3 = 'sdf3.txt'
+            let nftDirectory2 = 'sdf2.txt'
+            let nftDirectory4 = 'sdf4.txt'
+
+            let result
+
+            beforeEach(async () => {
+                result =  await nft.mint(nftDirectory)
+                result =  await nft.mint(nftDirectory3)
+
+                
+            })
+
+            it('Check the transfer of nft from deployer to user1', async ()=>{
+
+                result = await nft.ownerOf(0) // Take the address fo the owner
+                result.toString().should.equal(deployer.toString()) 
+                
+                result = await nft.transferFrom(deployer,user1,0)
+                
+                result = await nft.ownerOf(0) // Take the address fo the owner
+                // console.log("ownerOf = ",result.toString(),user1.toString())
+                result.toString().should.equal(user1.toString()) 
+
+
+
+
+            })
+
+            
+        })
+    })
+
     
 })

@@ -114,4 +114,37 @@ contract NFT  {
     }
     //  ---------------------------- enumerable of the Tokens ----------------
 
+
+    //  ---------------------------- Transfer NFTs ----------------
+
+    mapping (uint256 => address) private _tokenApprovals;
+
+
+    function transferFrom (address _from, address _to,uint256 _tokenId) public returns (bool){
+
+        require(_tokenOwner[_tokenId]!=address(0),'ERC721: token already exist'); // Require that this token ID dont exist 
+
+        require(_to!=address(0),'ERC721: address dont excist '); // Require that this token ID dont exist 
+
+        require(_from==_tokenOwner[_tokenId],'ERC721: You need to actually have the NFT'); // Require that this token ID dont exist 
+
+
+        
+        _tokenOwner[_tokenId] = _to; // change who is the owner of this tokenId
+
+        _OwnedTokensCount[_from] = _OwnedTokensCount[_from].sub(1);
+        _OwnedTokensCount[_to] = _OwnedTokensCount[_to].add(1);
+
+        //delete element from _ownedTokens
+
+
+        emit Transfer(_from,_to,_tokenId);
+
+
+        return (true);
+    }
+
+    //  ---------------------------- Transfer NFTs ----------------
+
+
 }
