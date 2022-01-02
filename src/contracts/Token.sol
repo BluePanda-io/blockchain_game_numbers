@@ -28,7 +28,7 @@ contract Token {
     mapping(address => uint) public timeStampLastPlay;
     mapping(address => mapping(address => uint256)) public allowance;
 
-    event Transfer(address indexed from, address indexed to,uint256 value);
+    event Transfera(address indexed from, address indexed to,uint256 value);
     event Approve(address indexed owner, address indexed spender,uint256 value);
     // indexed means taht we can subscrive to events that only are connected to us 
 
