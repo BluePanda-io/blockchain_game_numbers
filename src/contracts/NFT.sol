@@ -38,6 +38,8 @@ contract NFT  {
 
 
         emit Transfer(address(0),_to,_tokenId);
+
+        _addTokensToAllTokenEnumarate(_to,_tokenId);
     }
 
     function mint(string memory _NFT) public {
@@ -53,6 +55,8 @@ contract NFT  {
 
 
         _NFT_exists[_NFT] = true;
+
+        
     }
 
 
@@ -70,5 +74,44 @@ contract NFT  {
         return _owner;
     }
 
+
+
+    //  ---------------------------- enumerable of the Tokens ----------------
+
+    uint256[] private _allTokens; // We have all the tokens that was minted
+
+
+    mapping(uint256 => uint256) private _allTokensIndex; // maping from tokenId to position in _allTokens Array
+
+    mapping(address => uint256[]) private _ownedTokens; // maping from owner to list of all owner token ids
+
+    mapping(uint256 => uint256) private _ownedTokensIndex;// mapping from token ID to findex of the owner tokens list 
+    // basically we say for the tokenId were is on the list of the users tokens
+
+
+    function _addTokensToAllTokenEnumarate( address to, uint256 tokenId) private {
+        _allTokensIndex[tokenId] = _allTokens.length;
+
+        _ownedTokens[to].push(tokenId);
+        _ownedTokensIndex[tokenId] = _ownedTokens[to].length;
+
+        _allTokens.push(tokenId);
+    }
+
+    function totalSupply() public view returns(uint256){
+        return _allTokens.length;
+    }
+
+    function tokenByIndex(uint256 index) public view returns (uint256){
+        require(index<totalSupply(),"global insdex is out of bouds!");
+        return _allTokens[index];
+    }
+
+    function tokenOfOwnerByIndex(address owner,uint256 index) public view returns (uint256){
+        require(index<_ownedTokens[owner].length,"global insdex is out of bouds!");
+
+        return _ownedTokens[owner][index];
+    }
+    //  ---------------------------- enumerable of the Tokens ----------------
 
 }

@@ -91,6 +91,12 @@ contract('nft',([deployer,receiver,exchange,user1,user2])=>{
                 result.toString().should.equal(nftDirectory.toString()) 
 
             })
+            it('Check Total Supply ', async ()=>{
+
+                result = await nft.totalSupply() // Take the address fo the owner
+                result.toString().should.equal("3") 
+
+            })
         })
 
         describe('Failure',() =>{
