@@ -4,6 +4,8 @@ import Token from '../abis/Token.json'
 
 import { useDispatch, useSelector } from "react-redux";
 
+// import {Link} from "react-router-dom";
+
 
 import {startGame,playAgain,finishGame} from "../redux/actions/gameActions"
 
@@ -63,6 +65,7 @@ export const GameToken = ({}) => {
     dispatch(gameTransferTokens2(token,gameAddress,tokensAvailableToCollect,web3_accounts[0]))
 
   }
+  
 
   const playAgain_button = () =>{
 
@@ -91,6 +94,8 @@ export const GameToken = ({}) => {
           }>
             Game Start 
           </button>
+
+          {/* <Link to="/expenses" >Go to product</Link> */}
 
           <button onClick={() => 
             playAgain_button()

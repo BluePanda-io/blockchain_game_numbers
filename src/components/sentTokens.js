@@ -159,6 +159,12 @@ export const SentTokens = ({}) => {
           }>
             gameTransferTokens
           </button>
+
+          {web3_available==true?
+          <p>
+            You have this amount of cash = 
+            {user1_tokens} Ftoken
+          </p>:true}
             
         </>
 

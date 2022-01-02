@@ -3,13 +3,17 @@ import React, {useEffect,useState} from 'react'
 import Web3 from 'web3'
 
 
-
 import logo from './logo.svg';
 import './App.css';
 
 import Token from './abis/Token.json'
 
-
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+// import {
+//   BrowserRouter,
+//   Routes,
+//   Route
+// } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -162,10 +166,34 @@ function App() {
 
 
     }
+
+    const Home = () => (
+      <div>
+        <h2>Home</h2>
+      </div>
+    );
+    
+    const About = () => (
+      <div>
+        <h2>About</h2>
+      </div>
+    );
+    
     
 
   return (
     <>
+
+        {/* <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<p>asdf</p>} />
+            <Route path="expenses" element={<p>asdf22</p>} />
+            <Route path="invoices" element={<p>asdf33</p>} />
+          </Routes>
+        </BrowserRouter> */}
+
+        
+
     
         <div className="App">
           <header className="App-header">
@@ -186,7 +214,19 @@ function App() {
             {web3_available==true?
             <>
 
-            <SentTokens/>
+            <Router>
+              <nav style={{padding: "20px"}}>
+                <Link to="/">Sent Cash</Link>
+                <Link to="/t">___</Link>
+                <Link to="/about">Play Game</Link>
+              </nav>
+              <Routes>
+                <Route path="/" element={<SentTokens/>} />
+                <Route path="/about" element={<GameToken />} />
+              </Routes>
+            </Router>
+
+            {/* <SentTokens/>
 
             <br/>
               <br/>
@@ -194,7 +234,7 @@ function App() {
               <br/>
 
 
-            <GameToken />
+            <GameToken /> */}
             
     
 
