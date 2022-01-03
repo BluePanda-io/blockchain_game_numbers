@@ -167,6 +167,9 @@ export const web3Initialize = () => {
             const balanceOfNFTs = await NFT_contract.methods.balanceOf(accounts[0]).call()
             web3Info["balanceOfNFTs"] = balanceOfNFTs
 
+            const totalSupplyNFTs = await NFT_contract.methods.totalSupply().call()
+            web3Info["totalSupplyNFTs"] = totalSupplyNFTs
+
             console.log("tt -> 5",userBalance)
 
 

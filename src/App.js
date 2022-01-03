@@ -32,7 +32,7 @@ import {GameToken} from "./components/gameToken"
 
 import {SentTokens} from "./components/sentTokens"
 
-import {NFT_Mint} from "./components/nft_mint"
+import {NFT_Mint} from "./components/show_nfts"
 
 
 
@@ -216,14 +216,20 @@ function App() {
                 <Link to="/about">Play Game</Link>
                 <Link to="/t">___</Link>
                 <Link to="/nft_mint">NFT Mint</Link>
+                <Link to="/t">___</Link>
+                <Link to="/show_nfts">Show My NFTs</Link>
               </nav>
               <Routes>
                 <Route path="/" element={<SentTokens/>} />
                 <Route path="/about" element={<GameToken />} />
                 <Route path="/nft_mint" element={<NFT_Mint/>} />
+                <Route path="/show_nfts" element={<NFT_Mint/>} />
               </Routes>
             </Router>
 
+
+
+          
             
     
 
