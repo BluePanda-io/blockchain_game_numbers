@@ -1,6 +1,7 @@
 import web3Reducer from './reducers/web3Reducer';
 import userReducer from './reducers/userReducer';
 import gameReducer from './reducers/gameReducer';
+import NFT_Reducer from './reducers/NFT_Reducer';
 
 
 
@@ -13,6 +14,7 @@ const ourDepartments = combineReducers({
    web3Data: web3Reducer,
    userData: userReducer,
    gameData: gameReducer,
+   nftData: NFT_Reducer,
 });
 
 const store = createStore(

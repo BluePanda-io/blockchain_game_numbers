@@ -157,16 +157,38 @@ contract('nft',([deployer,receiver,exchange,user1,user2])=>{
 
             })
 
+            it('Check the nfts of a user saved on the file and what is the file', async ()=>{
+
+                result = await nft.tokenOfOwnerByIndexDirectory(deployer,0)
+                // console.log("tokenOfOwnerByIndex =",result.toString())
+                result.toString().should.equal(nftDirectory) // he have two nfts
+
+                result = await nft.tokenOfOwnerByIndexDirectory(deployer,1)
+                result.toString().should.equal(nftDirectory3) // he have two nfts
+
+                result = await nft.tokenOfOwnerByIndexDirectory(deployer,2)
+                result.toString().should.equal(nftDirectory4) // he have two nfts
+
+            })
+
             it('Check all the token indexing', async ()=>{
 
-                result = await nft.tokenByIndex(0)
-                result.toString().should.equal("0") // he have two nfts
+                const numberNFTs = await nft.balanceOf(deployer)
+                
 
-                result = await nft.tokenByIndex(1)
-                result.toString().should.equal("1") // he have two nfts
+                for (let i=0;i<numberNFTs-1;i++){
+                    result = await nft.tokenByIndex(i)
+                    result.toString().should.equal(i.toString())
+                }
 
-                result = await nft.tokenByIndex(2)
-                result.toString().should.equal("2") // he have two nfts
+                // result = await nft.tokenByIndex(0)
+                // result.toString().should.equal("0") // he have two nfts
+
+                // result = await nft.tokenByIndex(1)
+                // result.toString().should.equal("1") // he have two nfts
+
+                // result = await nft.tokenByIndex(2)
+                // result.toString().should.equal("2") // he have two nfts
 
             })
 
@@ -202,9 +224,6 @@ contract('nft',([deployer,receiver,exchange,user1,user2])=>{
                 result = await nft.ownerOf(0) // Take the address fo the owner
                 // console.log("ownerOf = ",result.toString(),user1.toString())
                 result.toString().should.equal(user1.toString()) 
-
-
-
 
             })
 

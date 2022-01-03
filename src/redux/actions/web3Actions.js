@@ -3,6 +3,7 @@ import detectEthereumProvider from '@metamask/detect-provider'
 
 
 import Token from '../../abis/Token.json'
+import NFT from '../../abis/NFT.json'
 
 
 export const WEB3INIT = "WEB3INIT";
@@ -59,19 +60,27 @@ export const changeAddressMetamask = () => {
 
 
             const token = new window.web3.eth.Contract(Token.abi, Token.networks[networkId].address)
-
             web3Info["token"] = token
+
+            const NFT_contract = new window.web3.eth.Contract(NFT.abi, NFT.networks[networkId].address)
+            web3Info["NFT_contract"] = NFT_contract
+
+
 
 
 
 
             const gameAddress = await token.methods.gameAddress().call()
             web3Info["gameAddress"] = gameAddress
+            
 
 
 
             const userBalance = await token.methods.balanceOf(accounts[0]).call()
             web3Info["userBalance"] = userBalance
+
+            const balanceOfNFTs = await NFT_contract.methods.balanceOf(accounts[0]).call()
+            web3Info["balanceOfNFTs"] = balanceOfNFTs
 
 
 
@@ -137,8 +146,10 @@ export const web3Initialize = () => {
 
 
             const token = new window.web3.eth.Contract(Token.abi, Token.networks[networkId].address)
-
             web3Info["token"] = token
+
+            const NFT_contract = new window.web3.eth.Contract(NFT.abi, NFT.networks[networkId].address)
+            web3Info["NFT_contract"] = NFT_contract
 
 
 
@@ -152,6 +163,9 @@ export const web3Initialize = () => {
 
             const userBalance = await token.methods.balanceOf(accounts[0]).call()
             web3Info["userBalance"] = userBalance
+
+            const balanceOfNFTs = await NFT_contract.methods.balanceOf(accounts[0]).call()
+            web3Info["balanceOfNFTs"] = balanceOfNFTs
 
             console.log("tt -> 5",userBalance)
 

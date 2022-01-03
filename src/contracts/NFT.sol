@@ -109,9 +109,21 @@ contract NFT  {
 
     function tokenOfOwnerByIndex(address owner,uint256 index) public view returns (uint256){
         require(index<_ownedTokens[owner].length,"global insdex is out of bouds!");
+        require(_tokenOwner[_ownedTokens[owner][index]]!=address(0));
+
 
         return _ownedTokens[owner][index];
     }
+
+    function tokenOfOwnerByIndexDirectory(address owner,uint256 index) public view returns (string memory){
+        require(index<_ownedTokens[owner].length,"global insdex is out of bouds!");
+        require(_tokenOwner[_ownedTokens[owner][index]]!=address(0));
+
+
+        return NFTs[_ownedTokens[owner][index]];
+    }
+
+
     //  ---------------------------- enumerable of the Tokens ----------------
 
 
