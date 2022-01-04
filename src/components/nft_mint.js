@@ -46,7 +46,7 @@ export const NFT_Mint = ({}) => {
           <button onClick={() => 
             mintNFT_button()
           }>
-            Mint New MFT
+            Mint New MFT sdf
           </button>
 
           {mint_nft_directory?<img src={mint_nft_directory} alt="image" />:true}

@@ -8,7 +8,8 @@ const stateUserInitial = {
   balanceOfNFTs: -1,
   totalSupplyNFTs: -1,
   NFT_contract: {},
-  mint_nft_directory: "" 
+  mint_nft_directory: "",
+  NFTs_pathDirectory: [],
 };
 
 const NFT_Reducer = (stateUser = stateUserInitial, action) => {
@@ -24,11 +25,15 @@ const NFT_Reducer = (stateUser = stateUserInitial, action) => {
         isAvailable: true,
       };
     case nftActionTags.MINT_NFT:
-      console.log("sdsssdsdsds")
       return {
         ...stateUser,
         mint_nft_directory: payload.web3Info.pathDirectory,
       };
+      case nftActionTags.COLLECT_MY_NFTS:
+        return {
+          ...stateUser,
+          NFTs_pathDirectory: payload.web3Info.NFTs_pathDirectory,
+        };
 
     default:
       return {...stateUser};

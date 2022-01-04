@@ -12264,12 +12264,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x5f13b2E4E18bc46476827cB3684C36D0B2f6FF31",
-      "transactionHash": "0xe1ff57c54deda4f1610d185ad82e62f3141c37ba23be1d8268d7d05dbcfd431b"
+      "address": "0x5B7af6d4748101CE55EA5956A406c23BA0ddC175",
+      "transactionHash": "0x701baeb99f344258110fe2598261094b9f2ee418ffef396178afa537e45defc3"
     }
   },
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-01-03T04:24:29.718Z",
+  "updatedAt": "2022-01-04T00:37:52.407Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
