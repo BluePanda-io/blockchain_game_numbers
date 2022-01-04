@@ -226,6 +226,80 @@ contract('nft',([deployer,receiver,exchange,user1,user2])=>{
                 result.toString().should.equal(user1.toString()) 
 
             })
+            
+
+
+            
+
+            
+        })
+    })
+
+    describe('NFT complicated transfer',()=>{
+
+        describe('Success',() =>{
+
+            let nftDirectory = 'sdf.txt'
+            let nftDirectory2 = 'sdf2.txt'
+            let nftDirectory3 = 'sdf3.txt'
+            let nftDirectory4 = 'sdf4.txt'
+            let nftDirectory5 = 'sdf5.txt'
+            let nftDirectory6 = 'sdf6.txt'
+            let nftDirectory7 = 'sdf7.txt'
+
+            let result
+
+            beforeEach(async () => {
+                result =  await nft.mint(nftDirectory5,{from: user1})
+                result =  await nft.mint(nftDirectory6,{from: user1})
+                result =  await nft.mint(nftDirectory)
+                result =  await nft.mint(nftDirectory2)
+                result =  await nft.mint(nftDirectory3)
+                
+                
+            })
+
+            it('Check the transfer of nft from deployer to user1', async ()=>{
+
+                let numberNFTs = await nft.balanceOfAllTokensMintToAddress(deployer)
+                
+
+                for (let i=0;i<numberNFTs;i++){
+                    result = await nft.tokenOfOwnerByIndexDirectory(deployer,i)
+                    console.log("tokenOfOwnerByIndexDirectory = ",result.toString())
+                    // result.toString().should.equal(result.toString())
+                }
+
+                let tokenID = await nft.tokenOfOwnerByIndex(deployer,1)
+                console.log("tokenID of the (1) index of deployer = ",tokenID.toString())
+
+
+                let addressOwner = await nft._tokenOwner(tokenID)
+                console.log("tokenID of the (1) index of deployer = ",addressOwner.toString())
+                addressOwner.toString().should.equal(deployer.toString()) 
+
+
+
+                result = await nft.transferFrom(deployer,user1,tokenID)
+
+                addressOwner = await nft._tokenOwner(tokenID)
+                console.log("tokenID of the (1) index of deployer = ",addressOwner.toString())
+                addressOwner.toString().should.equal(user1.toString()) 
+
+                
+                numberNFTs = await nft.balanceOfAllTokensMintToAddress(deployer)
+
+                for (let i=0;i<numberNFTs;i++){
+                    result = await nft.tokenOfOwnerByIndexDirectory(deployer,i)
+                    console.log("tokenOfOwnerByIndexDirectory = ",result.toString())
+                    // result.toString().should.equal(result.toString())
+                }
+
+            })
+            
+
+
+            
 
             
         })

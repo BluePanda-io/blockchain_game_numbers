@@ -63,7 +63,7 @@ export const showNFTs =  (NFT_contract,accountMe,totalSupplyNFTs) => {
 
         
 
-            const balanceOfUser = await NFT_contract.methods.balanceOf(accountMe).call()
+            const balanceOfUser = await NFT_contract.methods.balanceOfAllTokensMintToAddress(accountMe).call()
 
             console.log("balanceOfUser = ",balanceOfUser)
 
@@ -72,12 +72,19 @@ export const showNFTs =  (NFT_contract,accountMe,totalSupplyNFTs) => {
 
             let NFTs_pathDirectory = [];
             for (let i=0;i<balanceOfUser;i++){
+
+                try{
                 pathDirectory = await NFT_contract.methods.tokenOfOwnerByIndexDirectory(accountMe,i).call()
 
                 console.log("pathDirectory = ",pathDirectory)
 
 
                 NFTs_pathDirectory.push({pathDirectory,index: i})
+                } catch {
+                    console.log('NFT dont work ')
+                }
+
+                
             }
 
 

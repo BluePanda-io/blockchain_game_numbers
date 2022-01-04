@@ -13,7 +13,7 @@ contract NFT  {
     string public symbol = "NFTG";
 
     //mapping from token ID to owner address
-    mapping (uint256 => address) private _tokenOwner;
+    mapping (uint256 => address) public _tokenOwner;
 
     //mapping from owner to number of owened tokens
     mapping (address => uint256) private _OwnedTokensCount;
@@ -66,6 +66,15 @@ contract NFT  {
         return _OwnedTokensCount[_owner];
     }
 
+
+    function balanceOfAllTokensMintToAddress(address _owner) public view returns (uint256) {
+        require(_owner!=address(0), 'ERC721 balanceOf: Address is not zero');
+
+        return _ownedTokens[_owner].length;
+    }
+
+    
+
     function ownerOf(uint256 _tokenId) public view returns (address) {
         address _owner = _tokenOwner[_tokenId];
 
@@ -93,6 +102,7 @@ contract NFT  {
         _allTokensIndex[tokenId] = _allTokens.length;
 
         _ownedTokens[to].push(tokenId);
+        
         _ownedTokensIndex[tokenId] = _ownedTokens[to].length;
 
         _allTokens.push(tokenId);
@@ -110,6 +120,8 @@ contract NFT  {
     function tokenOfOwnerByIndex(address owner,uint256 index) public view returns (uint256){
         require(index<_ownedTokens[owner].length,"global insdex is out of bouds!");
         require(_tokenOwner[_ownedTokens[owner][index]]!=address(0));
+        require(_tokenOwner[_ownedTokens[owner][index]]==owner);
+
 
 
         return _ownedTokens[owner][index];
@@ -118,6 +130,8 @@ contract NFT  {
     function tokenOfOwnerByIndexDirectory(address owner,uint256 index) public view returns (string memory){
         require(index<_ownedTokens[owner].length,"global insdex is out of bouds!");
         require(_tokenOwner[_ownedTokens[owner][index]]!=address(0));
+        require(_tokenOwner[_ownedTokens[owner][index]]==owner);
+
 
 
         return NFTs[_ownedTokens[owner][index]];
@@ -140,12 +154,14 @@ contract NFT  {
 
         require(_from==_tokenOwner[_tokenId],'ERC721: You need to actually have the NFT'); // Require that this token ID dont exist 
 
-
         
         _tokenOwner[_tokenId] = _to; // change who is the owner of this tokenId
 
         _OwnedTokensCount[_from] = _OwnedTokensCount[_from].sub(1);
         _OwnedTokensCount[_to] = _OwnedTokensCount[_to].add(1);
+
+        _addTokensToAllTokenEnumarate(_to,_tokenId);
+
 
         //delete element from _ownedTokens
 
