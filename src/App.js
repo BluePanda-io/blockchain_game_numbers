@@ -200,8 +200,15 @@ function App() {
               {web3_accounts}
 
               {/* This is the Token Total Supply:{totalSupply} */}
+              <h1 className="text-4xl font-bold underline">
+                Hello world!
+              </h1>
             </p>:true}
-
+            
+              {/* <h1 className="text-1xl">business</h1> */}
+              {/* <h1 className="text-3xl">
+                Hello world!
+              </h1> */}
 
             <NetworkChange />
 
