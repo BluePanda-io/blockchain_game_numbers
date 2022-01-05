@@ -204,13 +204,13 @@ contract('nft',([deployer,receiver,exchange,user1,user2])=>{
             let nftDirectory3 = 'sdf3.txt'
             let nftDirectory2 = 'sdf2.txt'
             let nftDirectory4 = 'sdf4.txt'
+            let nftDirectory5 = 'sdf5.txt'
 
             let result
 
             beforeEach(async () => {
                 result =  await nft.mint(nftDirectory)
-                result =  await nft.mint(nftDirectory3)
-
+                result =  await nft.mint(nftDirectory2)
                 
             })
 
@@ -226,8 +226,32 @@ contract('nft',([deployer,receiver,exchange,user1,user2])=>{
                 result.toString().should.equal(user1.toString()) 
 
             })
+
+            beforeEach(async () => {
+                result =  await nft.mint(nftDirectory3)
+                result =  await nft.mint(nftDirectory4)
+                result =  await nft.mint(nftDirectory5)
+                
+            })
             
 
+            describe('Failure',() =>{
+
+                let nftDirectory = 'sdf.txt'
+    
+                let result
+    
+    
+                it('Check there is no owner for NTF 2 becuase its not minted yet', async ()=>{
+
+                    result = await nft.transferFrom(deployer,deployer,0).should.be.rejectedWith(EVM_REVERT)
+
+    
+                    // result = await nft.ownerOf(2).should.be.rejectedWith(EVM_REVERT) // Take the address fo the owner
+                    // result.toString().should.equal(user1.toString()) 
+    
+                })
+            })
 
             
 

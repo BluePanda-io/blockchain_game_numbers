@@ -56,7 +56,6 @@ export const ShowNFT_page = ({}) => {
   }
 
 
-  const [accountSelect, setAccountSelect] = useState("0x0159B7f11793741e433cf169f567aBB9d3dA0768");
 
   const options = [
     {
@@ -73,6 +72,8 @@ export const ShowNFT_page = ({}) => {
     },
   ];
   
+  const [accountSelect, setAccountSelect] = useState(options[0].value);
+
 
   const [selectNFT,setSelectNFT] = useState(-1)
   
@@ -111,6 +112,8 @@ export const ShowNFT_page = ({}) => {
 
           {NFTs_pathDirectory.map((pathNFT,idx) => (
             <>
+              {pathNFT.pathDirectory!=""?
+              <>
               <input
                 type="radio"
                 checked={idx === selectNFT}
@@ -120,6 +123,7 @@ export const ShowNFT_page = ({}) => {
               />
               {pathNFT.pathDirectory?<img src={pathNFT.pathDirectory} alt="image" />:true}
               <br/>
+              </>:true}
             </>
             ))}
 

@@ -1,6 +1,9 @@
 import Web3 from 'web3'
 import detectEthereumProvider from '@metamask/detect-provider'
 
+import {showNFTs} from "./NFT_Actions"
+
+
 
 import Token from '../../abis/Token.json'
 import NFT from '../../abis/NFT.json'
@@ -36,9 +39,7 @@ const _changeAddressMetamask = (web3Info) => {
 export const changeAddressMetamask = () => {
     return async (dispatch) => {
 
-        
-
-        const provider = await detectEthereumProvider(); 
+     
 
         let web3Info = {}
         
@@ -82,10 +83,16 @@ export const changeAddressMetamask = () => {
             const balanceOfNFTs = await NFT_contract.methods.balanceOf(accounts[0]).call()
             web3Info["balanceOfNFTs"] = balanceOfNFTs
 
+            const totalSupplyNFTs = await NFT_contract.methods.totalSupply().call()
+            web3Info["totalSupplyNFTs"] = totalSupplyNFTs
+
 
 
             const userAllowance = await token.methods.allowance(gameAddress,accounts[0]).call()
             web3Info["userAllowance"] = userAllowance
+
+
+
 
 
             const startAddress = web3Info["accounts"][0].substring(0, 5)
@@ -98,13 +105,16 @@ export const changeAddressMetamask = () => {
                 localStorage.setItem(`tokensAvailableToCollect_${startAddress}`, 0);
                 web3Info["tokensAvailableToCollect"] = 0
             }
+            dispatch(_changeAddressMetamask(web3Info));
+            dispatch(showNFTs(NFT_contract,accounts[0]))
         } catch {
             console.log("error with metamask")
         }
 
 
 
-        dispatch(_changeAddressMetamask(web3Info));
+        
+
 
         
     }
@@ -115,14 +125,11 @@ export const web3Initialize = () => {
     return async (dispatch) => {
 
 
-        const provider = await detectEthereumProvider(); 
-
         let web3Info = {}
 
         try {
             console.log("tt -> 0.5",Token.abi)
             console.log("tt -> 1",window.ethereum)
-            console.log("tt -> 1.5",provider)
             window.web3 = new Web3(window.ethereum)
 
 
@@ -199,6 +206,8 @@ export const web3Initialize = () => {
 
 
             dispatch(_web3Initialize(web3Info));
+            dispatch(showNFTs(NFT_contract,accounts[0]))
+
 
         } catch(err) {
            console.log("No Etherium Wallet")

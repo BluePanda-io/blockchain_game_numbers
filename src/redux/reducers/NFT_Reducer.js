@@ -28,6 +28,7 @@ const NFT_Reducer = (stateUser = stateUserInitial, action) => {
       return {
         ...stateUser,
         mint_nft_directory: payload.web3Info.pathDirectory,
+        totalSupplyNFTs: payload.web3Info.totalSupplyNFTs,
       };
       case nftActionTags.COLLECT_MY_NFTS:
         return {

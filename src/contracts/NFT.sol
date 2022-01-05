@@ -127,7 +127,7 @@ contract NFT  {
             return _ownedTokens[owner][index];
 
         } else {
-            return -1;
+            return 10000001;
         }
 
 
@@ -144,7 +144,7 @@ contract NFT  {
             return NFTs[_ownedTokens[owner][index]];
 
         } else {
-            return address(0);
+            return "";
         }
 
 
@@ -166,6 +166,9 @@ contract NFT  {
         require(_to!=address(0),'ERC721: address dont excist '); // Require that this token ID dont exist 
 
         require(_from==_tokenOwner[_tokenId],'ERC721: You need to actually have the NFT'); // Require that this token ID dont exist 
+
+
+        require(_from!=_to); // Require that this token ID dont exist 
 
         
         _tokenOwner[_tokenId] = _to; // change who is the owner of this tokenId
