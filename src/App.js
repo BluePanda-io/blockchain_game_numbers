@@ -4,7 +4,6 @@ import Web3 from 'web3'
 
 
 import logo from './logo.svg';
-import './App.css';
 
 import Token from './abis/Token.json'
 
@@ -36,6 +35,7 @@ import {NFT_Mint} from "./components/nft_mint"
 import {ShowNFT_page} from "./components/show_nfts"
 
 
+import './index.css';
 
 
 
@@ -201,6 +201,10 @@ function App() {
 
               {/* This is the Token Total Supply:{totalSupply} */}
             </p>:true}
+
+            <h1 className="text-6xl font-bold underline">
+              Hello world!
+            </h1>
 
 
             <NetworkChange />
