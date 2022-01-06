@@ -2,6 +2,9 @@ import React, {useEffect,useState} from 'react'
 
 import Web3 from 'web3'
 
+import "./styles/output.css";
+
+
 
 import logo from './logo.svg';
 import './App.css';
@@ -201,6 +204,17 @@ function App() {
 
               {/* This is the Token Total Supply:{totalSupply} */}
             </p>:true}
+
+            <h1 className="text-1xl font-bold underline">
+              Hello world! 8
+            </h1>
+
+        
+            <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
+              Button
+            </button>
+        
+        
 
 
             <NetworkChange />
